@@ -1,0 +1,30 @@
+[
+    {
+        "id": "whatsapp",
+        "platform": "WhatsApp",
+        "display": "+52 5574818177",
+        "url": "https://wa.me/525574818177",
+        "icon": "MessageCircle"
+    },
+    {
+        "id": "email",
+        "platform": "Email",
+        "display": "anoe.rgz@gmail.com",
+        "url": "mailto:anoe.rgz@gmail.com",
+        "icon": "Mail"
+    },
+    {
+        "id": "linkedin",
+        "platform": "LinkedIn",
+        "display": "/in/alan-noe-rodríguez-flor-44386a291",
+        "url": "https://linkedin.com/in/alan-noe-rodríguez-flor-44386a291",
+        "icon": "Linkedin"
+    },
+    {
+        "id": "github",
+        "platform": "GitHub",
+        "display": "github.com/",
+        "url": "https://github.com/",
+        "icon": "Github"
+    }
+]

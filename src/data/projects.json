@@ -1,0 +1,90 @@
+[
+    {
+        "id": 1,
+        "title": "Solucionador de Ecuaciones Diferenciales",
+        "description": "Software de escritorio con UI desarrollada en python para resolver ecuaciones de n-orden (Cauchy-Euler, Variación de parámetros).",
+        "image": "src/pages/projects/Project4/portadaEDOS.png",
+        "tags": [
+            "Software Dev",
+            "Python",
+            "Math"
+        ],
+        "links": {
+            "github": "#",
+            "demo": "#"
+        },
+        "category": "dev",
+        "longDescription": "Este proyecto nació de la necesidad de automatizar la resolución de ecuaciones diferenciales complejas en el ámbito académico. El software permite ingresar ecuaciones de orden N y selecciona automáticamente el método de resolución más adecuado (Coeficientes Indeterminados, Variación de Parámetros o Cauchy-Euler), además se podemos ingresar condicion de valor inicial .",
+        "galleryImages": [
+            "public/images/projects/Project_AntigravityEDOs/antigravity_interface.png",
+            "https://placehold.co/800x450/222/FFF?text=Step+by+Step+Solution"
+        ],
+        "developmentProcess": "El desarrollo se centró en la creación de un parser matemático y un motor de resolución simbólica. Se utilizó Pyhton para la interfaz gráfica, implementando un diseño oscuro personalizado para mejorar la experiencia de usuario durante largas sesiones de estudio."
+    },
+    {
+        "id": 2,
+        "title": "Workflow de Restauración de Imágenes IA",
+        "description": "Pipeline automatizado utilizando ComfyUI para upscaling y restauración de imágenes antiguas mediante modelos difusores.",
+        "image": "public/images/projects/Project_AI_WorkFlow/preview.png",
+        "tags": [
+            "AI",
+            "Automation",
+            "Python"
+        ],
+        "links": {
+            "github": "#",
+            "demo": null
+        },
+        "category": "ai",
+        "longDescription": "Desarrollo de un workflow de IA diseñado para transformar imágenes borrosas en piezas de alta definición (2K/4K). A diferencia de un escalado tradicional, este sistema entiende la imagen para reconstruirla en tres fases. La primera fase es la Etapa Fisica :Agranda la imagen matematicamente. 2. Etapa Artistica (Global): Refina texturas y luces sin cambiar la composición. 3. Etapa Quirurgica (Rostros): Dertecta los rostros y los reconstruye en alta definición. ",
+        "galleryImages": [
+            "https://placehold.co/800x450/111/FFF?text=Workflow+Node+Graph",
+            "https://placehold.co/800x450/222/FFF?text=Before+After+Comparison"
+        ],
+        "developmentProcess": "Etapa 1: Preparacion y escalado inicial. El objetivo aqui es hacer el lienzo mas grande antes de que la IA empiece a trabajar. Para esto se usa el nodo de 1. *Load Image* que nos permite cargar la imagen desde la pc. 2. *UpScaleModel*: Este nodo los permite cargar el modelo de reescalado, en este ejercicio usamos el modelo de [4x-UltraSharp] que es excelente por que nos permite mantener la nitidez sin alucinaciones. 3. *ImageUpScaleWithModel*: Aplica el modelo cargado en el nodo 2 a la imagen cargada en el nodo 1. 4. "
+    },
+    {
+        "id": 3,
+        "title": "Infraestructura Servidor Linux",
+        "description": "Configuración de servidor dedicado en Linux con gestión avanzada de particiones y dual boot para servicios de alta disponibilidad.",
+        "image": "https://placehold.co/600x400/1a1a1a/FFF?text=Linux+Server",
+        "tags": [
+            "SysAdmin",
+            "Linux",
+            "Network"
+        ],
+        "links": {
+            "github": null,
+            "demo": null
+        },
+        "category": "infra",
+        "longDescription": "Implementación de un servidor robusto basado en Linux, optimizado para rendimiento y seguridad. Incluye configuración de firewall, gestión de usuarios y particionamiento LVM para flexibilidad en el almacenamiento.",
+        "galleryImages": [
+            "https://placehold.co/800x450/111/FFF?text=Terminal+Config",
+            "https://placehold.co/800x450/222/FFF?text=System+Monitor"
+        ],
+        "developmentProcess": "El proceso incluyó la instalación de Arch Linux/Debian desde cero, compilación de un kernel personalizado para hardware específico y la configuración de contenedores Docker para aislar servicios."
+    },
+    {
+        "id": 4,
+        "title": "Análisis de Atención en Estudiantes",
+        "description": "Investigación estadística sobre la correlación entre uso de redes sociales y atención cognitiva en ingeniería.",
+        "image": "src/pages/projects/Project4/portada3.png",
+        "tags": [
+            "Data Science",
+            "Research",
+            "Stats"
+        ],
+        "links": {
+            "github": "#",
+            "demo": "#"
+        },
+        "category": "data",
+        "longDescription": "Estudio cuantitativo que analiza patrones de comportamiento digital en estudiantes universitarios. Se utilizaron técnicas de minería de datos para identificar correlaciones significativas entre el tiempo de pantalla y el rendimiento académico.",
+        "galleryImages": [
+            "https://placehold.co/800x450/111/FFF?text=Data+Heatmap",
+            "https://placehold.co/800x450/222/FFF?text=Regression+Analysis"
+        ],
+        "developmentProcess": "Se recopilaron datos mediante encuestas y logs de actividad (anonimizados). El análisis se realizó en Python utilizando Pandas y Scikit-learn para generar modelos predictivos y visualizaciones."
+    }
+]

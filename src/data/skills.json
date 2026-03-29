@@ -1,0 +1,32 @@
+[
+  {
+    "category": "Lenguajes & Backend",
+    "items": [
+      "Python",
+      "Java",
+      "SQL",
+      "C",
+      "API REST"
+    ]
+  },
+  {
+    "category": "IA & Data Science",
+    "items": [
+      "ComfyUI",
+      "TensorFlow",
+      "Pandas",
+      "Prompt Engineering",
+      "Computer Vision"
+    ]
+  },
+  {
+    "category": "Herramientas & DevOps",
+    "items": [
+      "Linux",
+      "Git/GitHub",
+      "Docker",
+      "MySQL Workbench",
+      "Antigravity"
+    ]
+  }
+]
