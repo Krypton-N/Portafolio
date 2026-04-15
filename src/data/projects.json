@@ -44,28 +44,6 @@
         "developmentProcess": "Etapa 1: Preparacion y escalado inicial. El objetivo aqui es hacer el lienzo mas grande antes de que la IA empiece a trabajar. Para esto se usa el nodo de 1. *Load Image* que nos permite cargar la imagen desde la pc. 2. *UpScaleModel*: Este nodo los permite cargar el modelo de reescalado, en este ejercicio usamos el modelo de [4x-UltraSharp] que es excelente por que nos permite mantener la nitidez sin alucinaciones. 3. *ImageUpScaleWithModel*: Aplica el modelo cargado en el nodo 2 a la imagen cargada en el nodo 1. 4. "
     },
     {
-        "id": 3,
-        "title": "Infraestructura Servidor Linux",
-        "description": "Configuración de servidor dedicado en Linux con gestión avanzada de particiones y dual boot para servicios de alta disponibilidad.",
-        "image": "https://placehold.co/600x400/1a1a1a/FFF?text=Linux+Server",
-        "tags": [
-            "SysAdmin",
-            "Linux",
-            "Network"
-        ],
-        "links": {
-            "github": null,
-            "demo": null
-        },
-        "category": "infra",
-        "longDescription": "Implementación de un servidor robusto basado en Linux, optimizado para rendimiento y seguridad. Incluye configuración de firewall, gestión de usuarios y particionamiento LVM para flexibilidad en el almacenamiento.",
-        "galleryImages": [
-            "https://placehold.co/800x450/111/FFF?text=Terminal+Config",
-            "https://placehold.co/800x450/222/FFF?text=System+Monitor"
-        ],
-        "developmentProcess": "El proceso incluyó la instalación de Arch Linux/Debian desde cero, compilación de un kernel personalizado para hardware específico y la configuración de contenedores Docker para aislar servicios."
-    },
-    {
         "id": 4,
         "title": "Data Analyst: Análisis de Atención en Estudiantes",
         "description": "Investigación estadística sobre la correlación entre uso de redes sociales y atención cognitiva en ingeniería.",

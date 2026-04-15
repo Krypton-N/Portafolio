@@ -3,7 +3,7 @@ import SectionTitle from '../ui/SectionTitle';
 
 const AboutTimeline = () => {
     return (
-        <section id="sobre-mi" className="py-20 bg-zinc-900/30">
+        <section id="sobre-mi" className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionTitle title="Mi Trayectoria" subtitle="Timeline" />
 
