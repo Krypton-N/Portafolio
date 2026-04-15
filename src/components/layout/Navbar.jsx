@@ -53,7 +53,7 @@ const Navbar = () => {
         <nav className={`fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl z-50 transition-all duration-500 ${isScrolled ? 'bg-black/40 backdrop-blur-2xl shadow-[0_0_20px_rgba(225,29,72,0.2)] border border-white/10' : 'bg-black/20 backdrop-blur-lg border border-white/5'
             } rounded-full py-3 px-6`}>
             <div className="flex items-center justify-between">
-                <Link to="/" className="text-xl font-bold bg-gradient-to-r from-zinc-100 to-rose-200 bg-clip-text text-transparent hover:to-rose-400 transition-colors">
+                <Link to="/Portafolio/" className="text-xl font-bold bg-gradient-to-r from-zinc-100 to-rose-200 bg-clip-text text-transparent hover:to-rose-400 transition-colors">
                     Portafolio
                 </Link>
 
