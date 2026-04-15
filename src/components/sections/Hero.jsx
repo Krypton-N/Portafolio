@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
+    const navigate = useNavigate();
     return (
         <section id="inicio" className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
             {/* Background Orbs */}
@@ -30,9 +32,11 @@ const Hero = () => {
                     <Button href="#proyectos">
                         Ver trabajos <ArrowRight size={20} />
                     </Button>
-                    <Button variant="secondary" href="/contact">
+
+                    <Button variant="secondary" onClick={() => navigate('/contact')}>
                         Contactame
                     </Button>
+
                 </div>
             </div>
         </section>
