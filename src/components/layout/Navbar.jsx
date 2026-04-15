@@ -74,8 +74,8 @@ const Navbar = () => {
 
                 {/* Social Icons */}
                 <div className="hidden md:flex items-center gap-4">
-                    {/* <a href="#" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Github size={18} /></a> */}
-                    <a href="www.linkedin.com/in/noe-rodriguez-ai/" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Linkedin size={18} /></a>
+                    <a href="https://github.com/Krypton-N" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Github size={18} /></a>
+                    <a href="https://www.linkedin.com/in/noe-rodriguez-ai/" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Linkedin size={18} /></a>
                 </div>
 
                 {/* Mobile Toggle */}
@@ -101,8 +101,8 @@ const Navbar = () => {
                         </Link>
                     ))}
                     <div className="flex gap-6 mt-4 justify-center">
-                        <a href="#" className="text-zinc-400 hover:text-rose-400"><Github size={24} /></a>
-                        <a href="#" className="text-zinc-400 hover:text-rose-400"><Linkedin size={24} /></a>
+                        <a href="https://github.com/Krypton-N" className="text-zinc-400 hover:text-rose-400"><Github size={24} /></a>
+                        <a href="https://www.linkedin.com/in/noe-rodriguez-ai/" className="text-zinc-400 hover:text-rose-400"><Linkedin size={24} /></a>
                     </div>
                 </div>
             )}
