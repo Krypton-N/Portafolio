@@ -5,6 +5,13 @@ import projectsData from '../../data/projects.json';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 
+import antigravity_interface from '../../resources/projects/Project_AntigravityEDOs/antigravity_interface.png';
+import antigravity_results from '../../resources/projects/Project_AntigravityEDOs/antigravity_results.png';
+import architecture_diagram from '../../resources/projects/Project_AntigravityEDOs/architecture_diagram.png';
+
+
+
+
 const Project1 = () => {
     const project = projectsData.find(p => p.id === 1);
     const [expandedRetos, setExpandedRetos] = useState({});
@@ -536,7 +543,7 @@ const Project1 = () => {
                                     <span className="text-xs font-mono text-zinc-500">Interfaz Principal</span>
                                 </div>
                                 <img
-                                    src="/src/resources/projects/Project_AntigravityEDOs/antigravity_interface.png"
+                                    src={antigravity_interface}
                                     alt="Interfaz principal de Antigravity"
                                     className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
                                     loading="lazy"
@@ -549,7 +556,7 @@ const Project1 = () => {
                                     <span className="text-xs font-mono text-zinc-500">Panel de Resultados</span>
                                 </div>
                                 <img
-                                    src="/src/resources/projects/Project_AntigravityEDOs/antigravity_results.png"
+                                    src={antigravity_results}
                                     alt="Panel de resultados paso a paso"
                                     className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
                                     loading="lazy"
@@ -562,7 +569,7 @@ const Project1 = () => {
                                     <span className="text-xs font-mono text-zinc-500">Arquitectura del Sistema</span>
                                 </div>
                                 <img
-                                    src="/src/resources/projects/Project_AntigravityEDOs/architecture_diagram.png"
+                                    src={architecture_diagram}
                                     alt="Diagrama de arquitectura del sistema"
                                     className="w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
                                     loading="lazy"

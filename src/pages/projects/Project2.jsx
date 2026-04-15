@@ -256,7 +256,7 @@ const Project2 = () => {
                                     <div className="relative group bg-zinc-950 overflow-hidden">
                                         <span className="absolute top-2 left-2 z-10 text-[10px] font-bold uppercase tracking-widest bg-zinc-900/80 text-zinc-400 px-2 py-0.5 rounded-md border border-white/10">Antes</span>
                                         <img
-                                            src={`/src/resources/projects/Project_AI_WorkFlow/antes_${id}.png`}
+                                            src={`/Portafolio/Project_AI_WorkFlow/antes_${id}.png`}
                                             alt={`Antes - Muestra ${id}`}
                                             className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                                             loading="lazy"
@@ -265,7 +265,7 @@ const Project2 = () => {
                                     <div className="relative group bg-zinc-950 overflow-hidden">
                                         <span className="absolute top-2 left-2 z-10 text-[10px] font-bold uppercase tracking-widest bg-rose-500/80 text-white px-2 py-0.5 rounded-md border border-rose-400/30">Después</span>
                                         <img
-                                            src={`/src/resources/projects/Project_AI_WorkFlow/despues_${id}.png`}
+                                            src={`/Portafolio/Project_AI_WorkFlow/despues_${id}.png`}
                                             alt={`Después - Muestra ${id}`}
                                             className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                                             loading="lazy"
@@ -338,9 +338,9 @@ const Project2 = () => {
                             <span className="text-xs font-mono text-zinc-500">ComfyUI — Workflow completo</span>
                             <span className="text-xs text-zinc-600">Haz clic para ampliar</span>
                         </div>
-                        <a href="/src/resources/projects/Project_AI_WorkFlow/preview.png" target="_blank" rel="noopener noreferrer" className="block">
+                        <a href="/Portafolio/Project_AI_WorkFlow/preview.png" target="_blank" rel="noopener noreferrer" className="block">
                             <img
-                                src="/src/resources/projects/Project_AI_WorkFlow/preview.png"
+                                src="/Portafolio/Project_AI_WorkFlow/preview.png"
                                 alt="Vista completa del workflow de restauración en ComfyUI"
                                 className="w-full h-auto object-contain hover:scale-[1.02] transition-transform duration-500"
                                 loading="lazy"
