@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        // Captura la ruta que el usuario intentó acceder
-        const path = window.location.pathname;
-        // Redirige a index.html con la ruta como parámetro
-        window.location.replace('/index.html?redirect=' + encodeURIComponent(path));
+        // Truco para SPAs en GitHub Pages con subcarpeta
+        // pathSegmentsToKeep = 1 porque el sitio está en /Portafolio/
+        var l = window.location;
+        l.replace(
+            l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+            l.pathname.split('/').slice(0, 1 + 1).join('/') + '/?/' +
+            l.pathname.slice(1).split('/').slice(1).join('/').replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        );
     </script>
 </head>
-<body>
-    <p>Redirecting...</p>
-</body>
+<body></body>
 </html>

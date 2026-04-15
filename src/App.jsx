@@ -16,7 +16,7 @@ import NeuralBackground from './components/sections/NeuralBackground';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Portafolio">
       <div className="bg-zinc-950 min-h-screen text-zinc-100 selection:bg-rose-500/30 selection:text-rose-200 flex flex-col relative">
         <NeuralBackground />
         <Navbar />
