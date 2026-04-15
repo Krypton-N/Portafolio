@@ -12,7 +12,7 @@ const CvPage = () => {
             title: "Full Stack Developer",
             language: "English",
             description: "Complete resume focusing on React, Node.js and Modern Web Tech.",
-            fileUrl: "/cv/CV_Rodriguez_AlanNoe_2025-11-09_English.pdf", // Update this path
+            fileUrl: "/src/resources/cv/CV_Rodriguez_AlanNoe_2025-11-09_English.pdf", // Update this path
             lastUpdated: "January 2026"
         },
         {
@@ -20,7 +20,7 @@ const CvPage = () => {
             title: "Desarrollador Full Stack",
             language: "Español",
             description: "Curriculum completo enfocado en React, Node.js y Tecnologías Web Modernas.",
-            fileUrl: "/cv/CV_Rodriguez_AlanNoe_2025-11-09_Espanol.pdf", // Update this path
+            fileUrl: "/src/resources/cv/CV_Rodriguez_AlanNoe_2025-11-09_Espanol.pdf", // Update this path
             lastUpdated: "Enero 2026"
         },
         // Add more versions if needed, e.g., "Backend Focused", "Frontend Focused"

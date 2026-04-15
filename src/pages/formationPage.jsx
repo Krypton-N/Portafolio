@@ -9,7 +9,7 @@ import SectionTitle from '../components/ui/SectionTitle';
 const certificates = [
     {
         id: 1,
-        file: '/images/Page_CertificationsAssets/DevConIA.png',
+        file: '/src/resources/Page_CertificationsAssets/DevConIA.png',
         title: 'Iniciación al Desarrollo con IA',
         issuer: 'BIG school — Romuald Fons & Brais Moure',
         date: 'Marzo 2026 · 6 horas',
@@ -18,7 +18,7 @@ const certificates = [
     },
     {
         id: 2,
-        file: '/images/Page_CertificationsAssets/Kickoff-BadgeAgile.png',
+        file: '/src/resources/Page_CertificationsAssets/Kickoff-BadgeAgile.png',
         title: 'PMI KICKOFF Badge — Agile',
         issuer: 'Project Management Institute (PMI)',
         date: '2025',
@@ -27,7 +27,7 @@ const certificates = [
     },
     {
         id: 3,
-        file: '/images/Page_CertificationsAssets/Kickoff-Badge-predictive Methodology.png',
+        file: '/src/resources/Page_CertificationsAssets/Kickoff-Badge-predictive Methodology.png',
         title: 'PMI KICKOFF Badge — Predictive',
         issuer: 'Project Management Institute (PMI)',
         date: '2025',
@@ -36,7 +36,7 @@ const certificates = [
     },
     {
         id: 4,
-        file: '/images/Page_CertificationsAssets/Project Managment & Agile Fundamentals.png',
+        file: '/src/resources/Page_CertificationsAssets/Project Managment & Agile Fundamentals.png',
         title: 'Project Management & Agile Fundamentals',
         issuer: 'Santander Open Academy',
         date: 'Agosto 2025 · 8 horas',
@@ -45,7 +45,7 @@ const certificates = [
     },
     {
         id: 5,
-        file: null,
+        file: '/src/resources/Page_CertificationsAssets/DLI_nvidia.webp',
         title: 'Fundamentals of Deep Learning',
         issuer: 'NVIDIA Deep Learning Institute (DLI)',
         date: 'Noviembre 2025 – Enero 2026',
@@ -84,11 +84,10 @@ const timelineItems = [
 const TimelineItem = ({ item }) => (
     <div className="mb-8 ml-8 relative group">
         <span
-            className={`absolute -left-[41px] top-0 h-5 w-5 rounded-full border-2 bg-zinc-900 transition-colors duration-300 ${
-                item.isCurrent
-                    ? 'border-rose-500 group-hover:bg-rose-500'
-                    : 'border-zinc-600 group-hover:border-rose-500'
-            }`}
+            className={`absolute -left-[41px] top-0 h-5 w-5 rounded-full border-2 bg-zinc-900 transition-colors duration-300 ${item.isCurrent
+                ? 'border-rose-500 group-hover:bg-rose-500'
+                : 'border-zinc-600 group-hover:border-rose-500'
+                }`}
         />
         <h3 className="text-xl font-bold text-white">{item.title}</h3>
         <span className="text-sm text-zinc-400 font-mono">{item.date}</span>
@@ -171,7 +170,7 @@ const CertificateCard = ({ cert, onImageClick }) => (
                         className="absolute inset-0 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in"
                     >
                         <span className="bg-black/60 backdrop-blur-sm text-white text-xs font-mono px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-1.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="11" y1="8" x2="11" y2="14" /><line x1="8" y1="11" x2="14" y2="11" /></svg>
                             Ver en grande
                         </span>
                     </div>

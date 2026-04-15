@@ -15,6 +15,7 @@
       "ComfyUI",
       "TensorFlow",
       "Pandas",
+      "NumPy",
       "Prompt Engineering",
       "Computer Vision"
     ]

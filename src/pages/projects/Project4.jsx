@@ -6,17 +6,17 @@ import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 
 // Gráficas e imágenes locales
-import imgHistograma from './Project4/grafica_1_histograma.png';
-import imgRegresion from './Project4/grafica_2_regresion_pro.png';
-import imgTStudent from './Project4/grafica_3_t_student.png';
-import imgHeatmap from './Project4/grafica_4_heatmap.png';
-import imgPlataformas from './Project4/grafica_extra_plataformas.png';
-import imgSueno from './Project4/grafica_extra_sueno.png';
-import imgResultados from './Project4/inves.png';
+import imgHistograma from '../../resources/projects/Project4/grafica_1_histograma.png';
+import imgRegresion from '../../resources/projects/Project4/grafica_2_regresion_pro.png';
+import imgTStudent from '../../resources/projects/Project4/grafica_3_t_student.png';
+import imgHeatmap from '../../resources/projects/Project4/grafica_4_heatmap.png';
+import imgPlataformas from '../../resources/projects/Project4/grafica_extra_plataformas.png';
+import imgSueno from '../../resources/projects/Project4/grafica_extra_sueno.png';
+import imgResultados from '../../resources/projects/Project4/inves.png';
 
 // Documentos PDF
-import docInforme from './Project4/Informe_Investigacion_RFAN_Ate_Frag.pdf';
-import docPresentacion from './Project4/Investigacion_Atencion fragmentada_presentacion.pdf';
+import docInforme from '../../resources/projects/Project4/Informe_Investigacion_RFAN_Ate_Frag.pdf';
+import docPresentacion from '../../resources/projects/Project4/Investigacion_Atencion fragmentada_presentacion.pdf';
 
 const Project4 = () => {
     // Tomamos el proyecto correspondiente en base de datos (id: 4 - Análisis de Atención en Estudiantes)
