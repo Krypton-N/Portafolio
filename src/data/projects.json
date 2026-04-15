@@ -3,7 +3,7 @@
         "id": 1,
         "title": "Solucionador de Ecuaciones Diferenciales",
         "description": "Software de escritorio con UI desarrollada en python para resolver ecuaciones de n-orden (Cauchy-Euler, Variación de parámetros).",
-        "image": "src/resources/projects/Project_AntigravityEDOs/Portada.png",
+        "image": "PortadasProjects/Portada_EDOS.png",
         "tags": [
             "Software Dev",
             "Python",
@@ -25,7 +25,7 @@
         "id": 2,
         "title": "Workflow de Restauración de Imágenes IA",
         "description": "Pipeline automatizado utilizando ComfyUI para upscaling y restauración de imágenes antiguas mediante modelos difusores.",
-        "image": "src/resources/projects/Project_AI_WorkFlow/preview.png",
+        "image": "PortadasProjects/Portada_ComfyImg.png",
         "tags": [
             "AI",
             "Automation",
@@ -69,7 +69,7 @@
         "id": 4,
         "title": "Data Analyst: Análisis de Atención en Estudiantes",
         "description": "Investigación estadística sobre la correlación entre uso de redes sociales y atención cognitiva en ingeniería.",
-        "image": "src/resources/projects/Project4/PortadaR.png",
+        "image": "PortadasProjects/Portada_AtFr.png",
         "tags": [
             "Data Science",
             "Research",
