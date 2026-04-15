@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import HomePage from './pages/HomePage';
@@ -29,6 +30,7 @@ function App() {
             <Route path="/proyecto/2" element={<Project2 />} />
             <Route path="/proyecto/3" element={<Project3 />} />
             <Route path="/proyecto/4" element={<Project4 />} />
+            <Route path="*" element={<Navigate to="/" replace />} />  {/* ← esto */}
           </Routes>
         </main>
         <Footer />
