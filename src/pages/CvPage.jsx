@@ -9,19 +9,19 @@ const CvPage = () => {
     const cvList = [
         {
             id: 1,
-            title: "Full Stack Developer",
+            title: "AI Engineer and Full Stack Developer",
             language: "English",
             description: "Complete resume focusing on React, Node.js and Modern Web Tech.",
-            fileUrl: "/src/resources/cv/CV_Rodriguez_AlanNoe_2025-11-09_English.pdf", // Update this path
-            lastUpdated: "January 2026"
+            fileUrl: "/Portafolio/cv/CV_Noe_Rodriguez_AIEngineer_en_14-04-2026.pdf", // Update this path
+            lastUpdated: "April 2026"
         },
         {
             id: 2,
-            title: "Desarrollador Full Stack",
+            title: "Ingeniero en IA y Desarrollador Full Stack",
             language: "Español",
             description: "Curriculum completo enfocado en React, Node.js y Tecnologías Web Modernas.",
-            fileUrl: "/src/resources/cv/CV_Rodriguez_AlanNoe_2025-11-09_Espanol.pdf", // Update this path
-            lastUpdated: "Enero 2026"
+            fileUrl: "/Portafolio/cv/CV_Noe_Rodriguez_AIEngineer_es_14-04-2026.pdf", // Update this path
+            lastUpdated: "Abril 2026"
         },
         // Add more versions if needed, e.g., "Backend Focused", "Frontend Focused"
     ];

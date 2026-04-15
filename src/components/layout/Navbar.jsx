@@ -75,7 +75,7 @@ const Navbar = () => {
                 {/* Social Icons */}
                 <div className="hidden md:flex items-center gap-4">
                     {/* <a href="#" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Github size={18} /></a> */}
-                    <a href="https://linkedin.com/in/alan-noe-rodríguez-flor-44386a291" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Linkedin size={18} /></a>
+                    <a href="www.linkedin.com/in/noe-rodriguez-ai/" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Linkedin size={18} /></a>
                 </div>
 
                 {/* Mobile Toggle */}

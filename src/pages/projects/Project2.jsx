@@ -13,8 +13,8 @@ const Project2 = () => {
     const imageIds = [10, 63, 72, 116, 180, 278, 287, 354, 610];
 
     const images = imageIds.map((id, idx) => ({
-        beforeSrc: `/Portafolio/Project_AI_Workflow/antes_${id}.png`,
-        afterSrc: `/Portafolio/Project_AI_Workflow/despues_${id}.png`,
+        beforeSrc: `/Portafolio/Project_AI_WorkFlow/antes_${id}.png`,
+        afterSrc: `/Portafolio/Project_AI_WorkFlow/despues_${id}.png`,
         sampleLabel: `Muestra #${idx + 1}`,
     }));
 

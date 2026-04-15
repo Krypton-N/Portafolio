@@ -16,15 +16,15 @@
     {
         "id": "linkedin",
         "platform": "LinkedIn",
-        "display": "/in/alan-noe-rodríguez-flor-44386a291",
-        "url": "https://linkedin.com/in/alan-noe-rodríguez-flor-44386a291",
+        "display": "/in/Noe-Rodriguez-IA",
+        "url": "www.linkedin.com/in/noe-rodriguez-ai",
         "icon": "Linkedin"
     },
     {
         "id": "github",
         "platform": "GitHub",
         "display": "github.com/",
-        "url": "https://github.com/",
+        "url": "https://github.com/Krypton-N",
         "icon": "Github"
     }
 ]
