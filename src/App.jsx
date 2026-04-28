@@ -13,10 +13,12 @@ import Project2 from './pages/projects/Project2';
 import Project3 from './pages/projects/Project3';
 import Project4 from './pages/projects/Project4';
 import NeuralBackground from './components/sections/NeuralBackground';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 function App() {
   return (
     <Router basename="/Portafolio">
+      <ScrollToTop />
       <div className="bg-zinc-950 min-h-screen text-zinc-100 selection:bg-rose-500/30 selection:text-rose-200 flex flex-col relative">
         <NeuralBackground />
         <Navbar />

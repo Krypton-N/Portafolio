@@ -64,5 +64,31 @@
             "https://placehold.co/800x450/222/FFF?text=Regression+Analysis"
         ],
         "developmentProcess": "Se recopilaron datos mediante encuestas y logs de actividad (anonimizados). El análisis se realizó en Python utilizando Pandas y Scikit-learn para generar modelos predictivos y visualizaciones."
+    },
+    {
+        "id": 3,
+        "title": "Hybrid RAG con Evaluación RAGAS",
+        "description": "Sistema de recuperación aumentada de generación (RAG) híbrido, que combina búsqueda semántica densa y dispersa.",
+        "image": "/Portafolio/PortadasProjects/Portada_WIP.png",
+        "coverIcons": ["BrainCircuit", "Layers", "BarChart3", "FlaskConical"],
+        "wip": true,
+        "tags": [
+            "RAG",
+            "RAGAS",
+            "LangChain",
+            "FAISS",
+            "Python"
+        ],
+        "links": {
+            "github": "#",
+            "demo": null
+        },
+        "category": "ai",
+        "longDescription": "Desarrollo completo de un pipeline RAG híbrido que combina recuperación densa (vectorial) y dispersa (BM25/TF-IDF). El sistema incluye un módulo de evaluación automática usando el framework RAGAS para medir faithfulness, answer relevancy y context precision de forma cuantitativa. La arquitectura contempla indexación con FAISS, gestión de prompts con LangChain y un evaluador automático que genera métricas de calidad por query.",
+        "galleryImages": [
+            "public/images/projects/Project_RAGEvaluation/ragas_metrics_dashboard.png",
+            "https://placehold.co/800x450/111/FFF?text=Hybrid+Retrieval+Flow"
+        ],
+        "developmentProcess": "Se implementaron dos estrategias de recuperación independientes (búsqueda densa sobre embeddings y búsqueda dispersa con BM25). Ambos resultados se fusionan mediante un sistema de reranking que prioriza documentos relevantes y filtra artefactos. El evaluador RAGAS se ejecuta post-generación para calcular métricas usando un LLM como juez. Los resultados se almacenan en metrics.json para trazabilidad."
     }
-]
+]

@@ -1,0 +1,51 @@
+{
+    "_meta": {
+        "description": "Machine-readable index of feature guides in docs/. An agent should read this file first, identify which guide is relevant to the current task by matching tags or 'modifies' paths, then load only that guide.",
+        "usage": "1. Read this file. 2. Find guide(s) whose 'tags' or 'modifies' match your task. 3. Read only those guide files. 4. Do not load guides unrelated to the task."
+    },
+    "guides": [
+        {
+            "file": "docs/ProjectCard.md",
+            "title": "ProjectCard — Adaptive Card System",
+            "summary": "How project cards work in the gallery. Covers the two card modes (Image vs Visual), the complete projects.json schema, and step-by-step instructions for adding new projects.",
+            "tags": [
+                "projects",
+                "gallery",
+                "cards",
+                "json-schema",
+                "ui-components",
+                "icons",
+                "wip",
+                "category-theming"
+            ],
+            "keywords": [
+                "ProjectCard",
+                "projects.json",
+                "coverIcons",
+                "wip",
+                "category",
+                "Image Mode",
+                "Visual Mode",
+                "ProjectsGallery",
+                "Badge",
+                "lucide icons",
+                "En Desarrollo"
+            ],
+            "modifies": [
+                "src/data/projects.json",
+                "src/components/ui/ProjectCard.jsx",
+                "src/components/sections/ProjectsGallery.jsx",
+                "src/App.jsx",
+                "src/pages/projects/",
+                "public/PortadasProjects/"
+            ],
+            "when_to_read": [
+                "Adding a new project to the portfolio",
+                "Changing how a card looks (icons, colors, mode)",
+                "Modifying projects.json schema",
+                "Understanding why a card renders differently from others",
+                "Adding a new project category/filter tab"
+            ]
+        }
+    ]
+}
