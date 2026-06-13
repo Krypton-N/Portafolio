@@ -56,7 +56,7 @@ const Navbar = () => {
             } rounded-full py-3 px-6`}>
             <div className="flex items-center justify-between">
                 <Link to="/" className="text-xl font-bold bg-gradient-to-r from-zinc-100 to-rose-200 bg-clip-text text-transparent hover:to-rose-400 transition-colors">
-                    Noe Rodriguez
+                    Noé Rodríguez
                 </Link>
 
                 {/* Desktop Menu */}
