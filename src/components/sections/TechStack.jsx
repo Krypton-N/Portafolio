@@ -1,56 +1,47 @@
 import React from 'react';
-import { Code, Database, Globe, Layers, Server, Terminal, Smartphone, Cpu } from 'lucide-react';
+import { Code, Server, Terminal, Cpu } from 'lucide-react';
 import skills from '../../data/skills.json';
-import SectionTitle from '../ui/SectionTitle';
+import Reveal from '../motion/Reveal';
 
 const iconMap = {
-    "Lenguajes & Backend": Server,
-    "IA & Data Science": Cpu,
-    "Herramientas & DevOps": Terminal,
-    "Frontend": Globe,
-    "Backend": Server,
-    "Database": Database,
-    "DevOps": Terminal,
-    "Mobile": Smartphone,
-    "Tools": Layers,
-    "AI/ML": Cpu,
-    "Other": Code
+    "Languages & Backend": Server,
+    "AI & Data Science": Cpu,
+    "Tools & DevOps": Terminal,
 };
 
+/**
+ * Skills grid — rendered inside the Method act (no own heading; the section
+ * marker comes from the parent).
+ */
 const TechStack = () => {
     return (
-        <section id="habilidades" className="py-24 relative">
-            <div className="container mx-auto px-6">
-                <SectionTitle title="Habilidades" subtitle="Tech Stack" />
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {skills.map((category, index) => {
-                        const Icon = iconMap[category.category] || Code;
-                        return (
-                            <div
-                                key={`${category.category}-${index}`}
-                                className="bg-zinc-900/40 backdrop-blur-sm border border-white/5 p-6 rounded-2xl hover:bg-zinc-800/50 transition-colors group flex flex-col h-full hover:border-rose-500/20"
-                            >
-                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-rose-500/10 transition-colors">
-                                    <Icon className="text-white group-hover:text-rose-400 transition-colors" size={24} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {skills.map((category, index) => {
+                const Icon = iconMap[category.category] || Code;
+                return (
+                    <Reveal key={`${category.category}-${index}`} delay={index * 0.06} className="h-full">
+                        <div className="bg-zinc-900/40 backdrop-blur-sm border border-white/5 p-6 rounded-2xl hover:bg-zinc-800/40 transition-colors group flex flex-col h-full hover:border-rose-500/20">
+                            <div className="flex items-center gap-3 mb-5">
+                                <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center group-hover:bg-rose-500/10 transition-colors">
+                                    <Icon className="text-zinc-300 group-hover:text-rose-400 transition-colors" size={20} />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-4">{category.category}</h3>
-                                <div className="flex flex-wrap gap-2 mt-auto">
-                                    {category.items.map((item) => (
-                                        <span
-                                            key={item}
-                                            className="px-3 py-1 bg-white/5 rounded-full text-xs text-zinc-400 border border-white/5 group-hover:border-rose-500/10"
-                                        >
-                                            {item}
-                                        </span>
-                                    ))}
-                                </div>
+                                <h3 className="text-base font-bold text-white">{category.category}</h3>
                             </div>
-                        );
-                    })}
-                </div>
-            </div>
-        </section>
+                            <div className="flex flex-wrap gap-2 mt-auto">
+                                {category.items.map((item) => (
+                                    <span
+                                        key={item}
+                                        className="px-3 py-1 bg-white/5 rounded-full text-xs text-zinc-400 border border-white/5 group-hover:border-rose-500/10 font-mono"
+                                    >
+                                        {item}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </Reveal>
+                );
+            })}
+        </div>
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, Github, Linkedin } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { scrollTo } from '../../lib/smoothScroll';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
             const element = document.getElementById(id);
             if (element) {
                 setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth' });
+                    scrollTo(element);
                 }, 100);
             }
         }
@@ -34,18 +35,19 @@ const Navbar = () => {
             const element = document.getElementById(id);
             if (element) {
                 e.preventDefault();
-                element.scrollIntoView({ behavior: 'smooth' });
+                scrollTo(element);
                 window.history.pushState(null, '', path);
             }
         }
     };
 
     const navLinks = [
-        { name: 'Inicio', path: '/#inicio' },
-        { name: 'Proyectos', path: '/#proyectos' },
-        { name: 'Mi Formación', path: '/formacion' },
-        { name: 'Contacto', path: '/contact' },
-        { name: 'CV', path: '/cv' },
+        { name: 'Home', path: '/#home' },
+        { name: 'Work', path: '/#work' },
+        { name: 'Method', path: '/#method' },
+        { name: 'Education', path: '/education' },
+        { name: 'Contact', path: '/contact' },
+        { name: 'Resume', path: '/cv' },
     ];
 
 
@@ -53,8 +55,8 @@ const Navbar = () => {
         <nav className={`fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl z-50 transition-all duration-500 ${isScrolled ? 'bg-black/40 backdrop-blur-2xl shadow-[0_0_20px_rgba(225,29,72,0.2)] border border-white/10' : 'bg-black/20 backdrop-blur-lg border border-white/5'
             } rounded-full py-3 px-6`}>
             <div className="flex items-center justify-between">
-                <Link to="/Portafolio/" className="text-xl font-bold bg-gradient-to-r from-zinc-100 to-rose-200 bg-clip-text text-transparent hover:to-rose-400 transition-colors">
-                    Portafolio
+                <Link to="/" className="text-xl font-bold bg-gradient-to-r from-zinc-100 to-rose-200 bg-clip-text text-transparent hover:to-rose-400 transition-colors">
+                    Noe Rodriguez
                 </Link>
 
                 {/* Desktop Menu */}
@@ -74,8 +76,8 @@ const Navbar = () => {
 
                 {/* Social Icons */}
                 <div className="hidden md:flex items-center gap-4">
-                    <a href="https://github.com/Krypton-N" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Github size={18} /></a>
-                    <a href="https://www.linkedin.com/in/noe-rodriguez-ai/" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Linkedin size={18} /></a>
+                    <a href="https://github.com/Krypton-N" aria-label="GitHub profile" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Github size={18} /></a>
+                    <a href="https://www.linkedin.com/in/noe-rodriguez-ai/" aria-label="LinkedIn profile" className="text-zinc-400 hover:text-white transition-colors hover:scale-110 duration-200"><Linkedin size={18} /></a>
                 </div>
 
                 {/* Mobile Toggle */}
@@ -101,8 +103,8 @@ const Navbar = () => {
                         </Link>
                     ))}
                     <div className="flex gap-6 mt-4 justify-center">
-                        <a href="https://github.com/Krypton-N" className="text-zinc-400 hover:text-rose-400"><Github size={24} /></a>
-                        <a href="https://www.linkedin.com/in/noe-rodriguez-ai/" className="text-zinc-400 hover:text-rose-400"><Linkedin size={24} /></a>
+                        <a href="https://github.com/Krypton-N" aria-label="GitHub profile" className="text-zinc-400 hover:text-rose-400"><Github size={24} /></a>
+                        <a href="https://www.linkedin.com/in/noe-rodriguez-ai/" aria-label="LinkedIn profile" className="text-zinc-400 hover:text-rose-400"><Linkedin size={24} /></a>
                     </div>
                 </div>
             )}

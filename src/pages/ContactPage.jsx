@@ -14,7 +14,7 @@ const ContactPage = () => {
     return (
         <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
             <div className="mb-12 text-center">
-                <h2 className="text-4xl font-bold text-white mb-4">Contact Me</h2>
+                <h2 className="font-display text-4xl font-bold text-white mb-4">Contact Me</h2>
                 <p className="text-zinc-400 text-lg">Let's start a conversation</p>
             </div>
 

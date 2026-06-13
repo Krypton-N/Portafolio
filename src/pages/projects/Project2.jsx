@@ -1,356 +1,333 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Github, ExternalLink, Search, Cpu, MemoryStick, Monitor, Laptop } from 'lucide-react';
+import { ArrowLeft, Search, Cpu, MemoryStick, Monitor, Maximize2, Workflow } from 'lucide-react';
 import projectsData from '../../data/projects.json';
 import Badge from '../../components/ui/Badge';
-import Button from '../../components/ui/Button';
+import SectionMarker from '../../components/ui/SectionMarker';
+import BeforeAfterSlider from '../../components/ui/BeforeAfterSlider';
 import ImageComparisonViewer from '../../components/ui/ImageComparisonViewer';
+import Reveal from '../../components/motion/Reveal';
+
+/* ───────────────────────── building blocks (page-local) ───────────────────────── */
+
+const Stat = ({ value, label }) => (
+    <div className="flex flex-col">
+        <span className="font-display text-2xl md:text-3xl font-bold text-white leading-none">{value}</span>
+        <span className="font-mono text-[11px] text-zinc-500 mt-1 uppercase tracking-wider">{label}</span>
+    </div>
+);
+
+const Setting = ({ label = 'Settings', children }) => (
+    <div className="bg-zinc-950/60 rounded-lg p-3 border border-white/5 mt-3">
+        <span className="font-mono text-[10px] text-rose-400 uppercase tracking-wider">{label}</span>
+        <div className="mt-1.5 text-sm text-zinc-300 space-y-1">{children}</div>
+    </div>
+);
+
+const K = ({ children }) => (
+    <code className="font-mono text-xs text-rose-300 bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/15">{children}</code>
+);
+
+/* A ComfyUI-style node on the pipeline rail */
+const NodeCard = ({ n, name, io, children, highlight }) => (
+    <div className="relative pl-9 pb-5 last:pb-0">
+        {/* port on the rail */}
+        <span className="absolute left-0 top-4 -translate-x-1/2 flex h-3.5 w-3.5 items-center justify-center">
+            <span className={`h-2.5 w-2.5 rounded-full border-2 ${highlight ? 'border-rose-400 bg-rose-500' : 'border-zinc-600 bg-zinc-950'}`} />
+        </span>
+        <div className={`rounded-xl overflow-hidden border bg-zinc-900/50 backdrop-blur-sm transition-colors ${highlight ? 'border-rose-500/40 shadow-[0_0_24px_rgba(244,63,94,0.12)]' : 'border-white/8 hover:border-rose-500/20'}`}>
+            <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-white/[0.02]">
+                <span className="font-mono text-xs text-rose-200 tracking-tight">
+                    <span className="text-zinc-600">{String(n).padStart(2, '0')}</span> · {name}
+                </span>
+                {io && <span className="font-mono text-[10px] text-zinc-600 hidden sm:inline">{io}</span>}
+            </div>
+            <div className="p-4 text-sm text-zinc-400 leading-relaxed">{children}</div>
+        </div>
+    </div>
+);
+
+const StageHeader = ({ index, name, title, tagline }) => (
+    <div className="mb-8">
+        <div className="flex items-baseline gap-4">
+            <span className="font-display text-5xl md:text-6xl font-bold text-zinc-800 leading-none">{index}</span>
+            <div>
+                <span className="font-mono text-xs text-rose-400 uppercase tracking-[0.2em]">Stage · {name}</span>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-white mt-1">{title}</h3>
+            </div>
+        </div>
+        <p className="text-zinc-400 mt-4 max-w-2xl leading-relaxed border-l-2 border-rose-500/40 pl-4">{tagline}</p>
+    </div>
+);
+
+/* ───────────────────────────────── page ───────────────────────────────── */
 
 const Project2 = () => {
     const project = projectsData.find(p => p.id === 2);
     const [viewerIndex, setViewerIndex] = useState(null);
 
     const imageIds = [10, 63, 72, 116, 180, 278, 287, 354, 610];
-
     const images = imageIds.map((id, idx) => ({
-        beforeSrc: `/Portafolio/Project_AI_WorkFlow/antes_${id}.png`,
-        afterSrc: `/Portafolio/Project_AI_WorkFlow/despues_${id}.png`,
-        sampleLabel: `Muestra #${idx + 1}`,
+        beforeSrc: `/Portafolio/Project_AI_WorkFlow/antes_${id}.webp`,
+        afterSrc: `/Portafolio/Project_AI_WorkFlow/despues_${id}.webp`,
+        sampleLabel: `Sample #${idx + 1}`,
     }));
 
     return (
         <>
-            <div className="fixed inset-0 bg-zinc-950/80 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }} />
+            {/* ─── Hero ─────────────────────────────────────────────── */}
+            <header className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <div className="max-w-6xl mx-auto relative z-10">
+                    <Link to="/" className="inline-flex items-center text-zinc-400 hover:text-rose-400 mb-10 transition-colors group font-mono text-sm">
+                        <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" />
+                        back to work
+                    </Link>
 
-            <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
-                <Link to="/" className="inline-flex items-center text-zinc-400 hover:text-rose-400 mb-8 transition-colors group">
-                    <ArrowLeft size={20} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Volver
-                </Link>
+                    <div className="grid lg:grid-cols-12 gap-10 items-end">
+                        <div className="lg:col-span-6">
+                            <div className="flex flex-wrap gap-2 mb-5">
+                                {project.tags.map((tag, idx) => <Badge key={idx}>{tag}</Badge>)}
+                            </div>
+                            <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-[0.95] tracking-tight">
+                                The Restoration<br />
+                                <span className="bg-gradient-to-r from-rose-500 to-rose-300 bg-clip-text text-transparent">Pipeline.</span>
+                            </h1>
+                            <p className="text-lg text-zinc-400 leading-relaxed mt-6 max-w-xl">
+                                A three-stage ComfyUI workflow that rebuilds blurry photographs into 4K —
+                                by <span className="text-zinc-200">understanding</span> the image, not guessing at it.
+                            </p>
 
-                <div className="mb-12">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.map((tag, idx) => (
-                            <Badge key={idx}>{tag}</Badge>
-                        ))}
-                    </div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                        {project.title}<span className="text-rose-500">.</span>
-                    </h1>
-                    <p className="text-xl text-zinc-300 leading-relaxed max-w-3xl">
-                        {project.description}
-                    </p>
+                            <div className="flex flex-wrap gap-x-8 gap-y-4 mt-10 pt-6 border-t border-white/10">
+                                <Stat value="14" label="nodes" />
+                                <Stat value="3" label="stages" />
+                                <Stat value="4K" label="output" />
+                                <Stat value="9" label="samples" />
+                            </div>
+                        </div>
 
-                    <div className="flex gap-4 mt-8">
-                        {project.links?.github && project.links.github !== "#" && (
-                            <Button href={project.links.github} variant="secondary">
-                                <Github size={20} /> Ver Código
-                            </Button>
-                        )}
-                        {project.links?.demo && project.links.demo !== "#" && (
-                            <Button href={project.links.demo} variant="primary">
-                                <ExternalLink size={20} /> Demo Live
-                            </Button>
-                        )}
+                        <div className="lg:col-span-6">
+                            <Reveal>
+                                <BeforeAfterSlider
+                                    beforeSrc="/Portafolio/Project_AI_WorkFlow/antes_116.webp"
+                                    afterSrc="/Portafolio/Project_AI_WorkFlow/despues_116.webp"
+                                />
+                                <p className="text-center text-xs text-zinc-600 font-mono mt-3">drag the divider — left is the raw input</p>
+                            </Reveal>
+                        </div>
                     </div>
                 </div>
+            </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-                    <div className="lg:col-span-3 space-y-12">
-                        <section>
-                            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                                <span className="text-rose-500">01.</span> Sobre el Proyecto
-                            </h2>
-                            <div className="prose prose-invert prose-zinc max-w-none text-zinc-400 leading-relaxed space-y-4">
-                                <p>Desarrollo de un workflow de IA diseñado para transformar imágenes borrosas en piezas de alta definición (2K/4K). A diferencia de un escalado tradicional, este sistema entiende la imagen para reconstruirla en tres fases.</p>
-                                <ol className="list-decimal pl-5 space-y-2">
-                                    <li><strong>Etapa Física:</strong> Agranda la imagen matemáticamente.</li>
-                                    <li><strong>Etapa Artística (Global):</strong> Refina texturas y luces sin cambiar la composición.</li>
-                                    <li><strong>Etapa Quirúrgica (Rostros):</strong> Detecta los rostros y los reconstruye en alta definición.</li>
-                                </ol>
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 relative z-10">
+
+                {/* ─── 01 · The Pipeline ──────────────────────────────── */}
+                <section className="pt-16">
+                    <SectionMarker index="01" label="The Pipeline" />
+
+                    {/* Stage 1 */}
+                    <Reveal>
+                        <StageHeader index="01" name="Physical" title="Preparation & Initial Upscaling"
+                            tagline="Enlarge the canvas before the AI starts thinking — pure mathematics, no generation yet." />
+                        <div className="relative border-l border-zinc-800 ml-1.5 mb-16">
+                            <NodeCard n={1} name="Load Image" io="→ IMAGE">
+                                <p><strong className="text-zinc-200">Purpose:</strong> the entry point. The small or blurry photo is loaded here.</p>
+                                <Setting><span className="font-medium text-zinc-200">image:</span> select the file from your machine.</Setting>
+                            </NodeCard>
+                            <NodeCard n={2} name="UpscaleModelLoader" io="→ MODEL">
+                                <p><strong className="text-zinc-200">Purpose:</strong> loads the model that stretches pixels mathematically, without generative AI involved.</p>
+                                <Setting><span className="font-medium text-zinc-200">model_name:</span> <K>4x-UltraSharp</K> — preserves sharpness without inventing artifacts (hallucinations).</Setting>
+                            </NodeCard>
+                            <NodeCard n={3} name="ImageUpscaleWithModel" io="IMAGE + MODEL → IMAGE">
+                                <p><strong className="text-zinc-200">Purpose:</strong> applies 4x-UltraSharp to the original image. A 512×512 input becomes 2048×2048 (4× larger).</p>
+                            </NodeCard>
+                            <NodeCard n={4} name="ImageScaleToTotalPixels" io="IMAGE → IMAGE">
+                                <p><strong className="text-zinc-200">Purpose:</strong> slightly downsizes the giant image to a standard resolution (2K/4K) so the GPU's VRAM is not saturated.</p>
+                                <Setting label="Key settings">
+                                    <p><span className="font-medium text-zinc-200">upscale_method:</span> <K>lanczos</K> — sharpest algorithm for downsampling.</p>
+                                    <p><span className="font-medium text-zinc-200">megapixels:</span> <K>2.0</K> = 1080p · <K>4.0</K> = 2K · <K>8.0</K> = 4K.</p>
+                                    <p><span className="font-medium text-zinc-200">resolution_steps:</span> <K>1</K> — more steps for larger inputs preserve sharpness.</p>
+                                    <p className="text-xs text-zinc-500 pt-2 mt-1 border-t border-white/5">⚠ With ≤ 8 GB VRAM, keep megapixels between 2.0–4.0 to avoid Out-of-Memory errors.</p>
+                                </Setting>
+                            </NodeCard>
+                        </div>
+                    </Reveal>
+
+                    {/* Stage 2 */}
+                    <Reveal>
+                        <StageHeader index="02" name="Artistic" title="Global Refinement"
+                            tagline="A diffusion model (Realistic Vision) repaints the image in HD — but ControlNet keeps it on a leash, forcing it to respect the original contours." />
+                        <div className="relative border-l border-zinc-800 ml-1.5 mb-16">
+                            <NodeCard n={5} name="CheckpointLoaderSimple" io="→ MODEL/CLIP/VAE">
+                                <p><strong className="text-zinc-200">Purpose:</strong> the creative brain of the workflow.</p>
+                                <Setting><span className="font-medium text-zinc-200">ckpt_name:</span> <K>RealisticVisionV60</K> — perfect for analog, realistic photography.</Setting>
+                            </NodeCard>
+                            <NodeCard n={6} name="ControlNetLoader" io="→ CONTROL_NET">
+                                <p><strong className="text-zinc-200">Purpose:</strong> loads the "digital police officer" that watches over the generative AI.</p>
+                                <Setting><span className="font-medium text-zinc-200">control_net_name:</span> a <K>Tile</K> model — the cornerstone of the workflow. It tells the AI: "improve detail and texture, but never change the overall structure or invent new objects".</Setting>
+                            </NodeCard>
+                            <NodeCard n={7} name="CLIP Text Encode" io="global prompts">
+                                <p><strong className="text-zinc-200">Purpose:</strong> the text directive that guides the AI's base brushstrokes across the whole image.</p>
+                                <Setting label="Prompts">
+                                    <p><span className="text-rose-300 font-medium">Positive:</span> high-fidelity modifiers — <K>Masterpiece, sharp focus, 8k</K>.</p>
+                                    <p><span className="text-zinc-300 font-medium">Negative:</span> visual debris expelled — <K>blur, low quality, watermark</K>.</p>
+                                </Setting>
+                            </NodeCard>
+                            <NodeCard n={8} name="VAE Encode" io="IMAGE → LATENT">
+                                <p><strong className="text-zinc-200">Purpose:</strong> a zip compressor that translates your RGB pixels into <em className="text-zinc-300">latent space</em> — the native environment where diffusion models operate.</p>
+                            </NodeCard>
+                            <NodeCard n={9} name="ApplyControlNet" io="CONDITIONING → CONDITIONING">
+                                <p><strong className="text-zinc-200">Purpose:</strong> the mixer that fuses the original image's conditioning with the strict ControlNet Tile instructions.</p>
+                                <Setting><span className="font-medium text-zinc-200">strength:</span> <K>1.0</K> — forces 100% respect for the original. Lowering it sharply increases wild hallucinations.</Setting>
+                            </NodeCard>
+                            <NodeCard n={10} name="KSampler" io="the rendering oven" highlight>
+                                <p><strong className="text-zinc-200">Purpose:</strong> the main engine. Img2Img happens here — it reads the base data, the ControlNet and the prompt, then runs iterative denoising passes until a photorealistic repaint is baked.</p>
+                                <Setting label="Critical setting">
+                                    <p><span className="font-medium text-zinc-200">denoise (AI creativity):</span> usually <K>0.3</K>. This makes or breaks the image:</p>
+                                    <ul className="mt-1.5 space-y-1 text-xs text-zinc-400 pl-1">
+                                        <li><K>0.1–0.25</K> — barely modifies textures; cleans minor flaws only.</li>
+                                        <li className="text-rose-300"><K>0.3–0.4</K> — the restoration sweet spot: cleans noise yet regenerates skin grain, fabric threads, lighting.</li>
+                                        <li><K>0.5+</K> — too proactive: alters identity, mutates jewelry, erases features.</li>
+                                    </ul>
+                                    <p className="mt-2"><span className="font-medium text-zinc-200">steps:</span> <K>25</K> · <span className="font-medium text-zinc-200">sampler:</span> <K>dpmpp_2m</K> — gold standard for non-CGI portraits.</p>
+                                </Setting>
+                            </NodeCard>
+                            <NodeCard n={11} name="VAEDecodeTiled" io="LATENT → IMAGE">
+                                <p><strong className="text-zinc-200">Purpose:</strong> the inverse of node 8 — materializes the repainted latent back into exportable RGB pixels.</p>
+                                <p className="mt-2 text-zinc-500"><strong className="text-zinc-300">Why "Tiled"?</strong> A full 4K decode in one shot can exceed the VRAM bottleneck and crash. Tiled decoding renders by segments — one corner at a time — stitched into the full canvas.</p>
+                            </NodeCard>
+                        </div>
+                    </Reveal>
+
+                    {/* Stage 3 */}
+                    <Reveal>
+                        <StageHeader index="03" name="Surgical" title="The Face Surgeon"
+                            tagline="Faces far from the focal point come out with strange teeth or fisheye eyes. This corrective pass detects each face, rebuilds it in its own high-res render, and stitches it back seamlessly." />
+                        <div className="relative border-l border-zinc-800 ml-1.5 mb-8">
+                            <NodeCard n={12} name="UltralyticsDetector + SAMLoader" io="the eyes">
+                                <p><strong className="text-zinc-200">Purpose:</strong> YOLO-based segmentation modules that scan the raster to find exact face coordinates.</p>
+                                <Setting>
+                                    <p><span className="font-medium text-zinc-200">model_name:</span> <K>face_yolov8m</K> — draws a precise bounding box around each face.</p>
+                                    <p className="mt-1"><span className="font-medium text-zinc-200">SAM:</span> converts YOLO's rectangle into a pixel-accurate facial silhouette, isolating cheeks and hair.</p>
+                                </Setting>
+                            </NodeCard>
+                            <NodeCard n={13} name="CLIP Text Encode" io="face-only prompts">
+                                <p><strong className="text-zinc-200">Purpose:</strong> text nodes wired exclusively to the FaceDetailer. They focus full attention on fine facial generation — <K>skin texture, detailed pores</K> — against negatives that prevent plastic, over-retouched skin.</p>
+                            </NodeCard>
+                            <NodeCard n={14} name="FaceDetailer" io="the reconstruction" highlight>
+                                <p><strong className="text-zinc-200">Purpose:</strong> unifies the final reconstruction. It crops each detected face, upscales it into its own private high-res frame, re-runs Img2Img there, paints a restored face, scales the tile back down, feathers the edge, and composites it back without disturbing the original lighting. Fully automated.</p>
+                                <Setting label="Vital settings">
+                                    <p><span className="font-medium text-zinc-200">guide_size:</span> <K>512</K> — extrusion resolution before repainting (<K>768</K>/<K>1024</K> for close-ups).</p>
+                                    <p><span className="font-medium text-zinc-200">denoise:</span> <K>0.4–0.5</K> — higher than the global stage, to rebuild lost eyes and melted teeth.</p>
+                                    <p><span className="font-medium text-zinc-200">drop_size:</span> <K>10</K> — skips ultra-tiny background faces (&lt; 10px), saving compute.</p>
+                                </Setting>
+                            </NodeCard>
+                        </div>
+                    </Reveal>
+                </section>
+
+                {/* ─── 02 · Results ───────────────────────────────────── */}
+                <section className="pt-24">
+                    <SectionMarker index="02" label="Results" />
+                    <Reveal>
+                        <p className="text-zinc-400 mb-8 max-w-2xl">
+                            Nine real samples. <span className="text-rose-400">Click any pair</span> to open the side-by-side magnifier and inspect skin, fabric, and eyes at pixel level.
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {imageIds.map((id, idx) => (
+                                <button
+                                    key={id}
+                                    onClick={() => setViewerIndex(idx)}
+                                    className="text-left rounded-2xl overflow-hidden border border-white/5 bg-zinc-900/40 backdrop-blur-sm shadow-lg hover:border-rose-500/30 hover:-translate-y-1 transition-all duration-300 cursor-pointer group/card"
+                                >
+                                    <div className="flex items-center justify-between px-4 py-2 border-b border-white/5">
+                                        <span className="text-xs font-mono text-zinc-500">sample #{idx + 1}</span>
+                                        <span className="text-xs text-zinc-600 group-hover/card:text-rose-400 transition-colors flex items-center gap-1">
+                                            <Search size={12} /> compare
+                                        </span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-px bg-white/5">
+                                        <div className="relative bg-zinc-950 overflow-hidden">
+                                            <span className="absolute top-2 left-2 z-10 text-[9px] font-bold uppercase tracking-widest bg-zinc-900/80 text-zinc-400 px-2 py-0.5 rounded border border-white/10">Before</span>
+                                            <img src={`/Portafolio/Project_AI_WorkFlow/antes_${id}.webp`} alt={`Before — sample ${idx + 1}`} className="w-full h-44 object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy" />
+                                        </div>
+                                        <div className="relative bg-zinc-950 overflow-hidden">
+                                            <span className="absolute top-2 left-2 z-10 text-[9px] font-bold uppercase tracking-widest bg-rose-500/80 text-white px-2 py-0.5 rounded border border-rose-400/30">After</span>
+                                            <img src={`/Portafolio/Project_AI_WorkFlow/despues_${id}.webp`} alt={`After — sample ${idx + 1}`} className="w-full h-44 object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy" />
+                                        </div>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </Reveal>
+                </section>
+
+                {/* ─── 03 · Execution environment ─────────────────────── */}
+                <section className="pt-24">
+                    <SectionMarker index="03" label="Execution Environment" />
+                    <Reveal>
+                        <div className="rounded-2xl border border-white/8 bg-zinc-900/40 backdrop-blur-sm p-8 relative overflow-hidden">
+                            <div className="absolute -right-16 -bottom-16 w-48 h-48 bg-rose-500/5 rounded-full blur-3xl" />
+                            <div className="flex items-center justify-between flex-wrap gap-4 mb-8 relative">
+                                <div>
+                                    <h3 className="font-display text-xl font-bold text-white">Lenovo LOQ 15IRX10</h3>
+                                    <p className="text-zinc-500 text-sm mt-1 font-mono">consumer hardware · no cloud</p>
+                                </div>
+                                <span className="font-mono text-xs text-rose-400 px-3 py-1 rounded-full border border-rose-500/20 bg-rose-500/5">local inference</span>
                             </div>
-                        </section>
-
-                        <section>
-                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                                <span className="text-rose-500">02.</span> Workflow y Nodos paso a paso
-                            </h2>
-
-                            <div className="space-y-8">
-                                {/* Etapa 1 */}
-                                <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 text-zinc-400 leading-relaxed shadow-inner backdrop-blur-sm space-y-4">
-                                    <h3 className="text-xl font-bold text-rose-400 mb-2">ETAPA 1: Preparación y Escalado Inicial</h3>
-                                    <p>El objetivo aquí es hacer el lienzo más grande antes de que la IA "piense".</p>
-
-                                    <div className="space-y-4 mt-4 text-zinc-300">
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">1. Load Image (Cargar Imagen)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Este es el punto de entrada. Aquí se carga la foto pequeña o borrosa.</p>
-                                            <p className="text-sm mt-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes</span> <span className="font-medium text-zinc-200 ml-2">image:</span> Eliges el archivo de tu PC.</p>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 relative">
+                                {[
+                                    { icon: Cpu, label: 'Processor', value: 'Intel Core i7 13650HX', note: '14 cores / 20 threads' },
+                                    { icon: MemoryStick, label: 'Memory', value: '24 GB', note: 'DDR5' },
+                                    { icon: Monitor, label: 'GPU', value: 'NVIDIA RTX 5050', note: '8 GB VRAM' },
+                                ].map((spec) => {
+                                    const Icon = spec.icon;
+                                    return (
+                                        <div key={spec.label} className="bg-zinc-950/50 rounded-xl p-5 border border-white/5 hover:border-rose-500/20 transition-colors">
+                                            <Icon size={20} className="text-rose-400 mb-3" />
+                                            <p className="text-[11px] text-zinc-500 uppercase tracking-wider font-mono">{spec.label}</p>
+                                            <p className="text-white font-semibold mt-1">{spec.value}</p>
+                                            <p className="text-zinc-500 text-xs mt-0.5">{spec.note}</p>
                                         </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">2. UpscaleModelLoader (Cargador de Modelo de Escalado)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Carga la herramienta que estira los píxeles matemáticamente sin IA reflexiva.</p>
-                                            <p className="text-sm mt-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes</span> <span className="font-medium text-zinc-200 ml-2">model_name:</span> <code>4x-UltraSharp</code>. Es excelente porque mantiene la nitidez sin inventar cosas raras (alucinaciones).</p>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">3. ImageUpscaleWithModel (Escalar Imagen con Modelo)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Aplica el 4x-UltraSharp que se cargo anteriormente a tu imagen pequeña original. Si tu imagen medía 512x512, ahora medirá 2048x2048 (4 veces más su tamaño original).</p>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">4. ImageScaleToTotalPixels (Escalar a Píxeles Totales)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Reduce un poco la imagen gigante generada en el paso anterior para ajustarla a una resolución estándar (ej. 2K o 4K) y no saturar la memoria VRAM de la GPU.</p>
-                                            <div className="mt-3 bg-zinc-900/50 rounded-lg p-3 border border-white/5">
-                                                <p className="text-sm mb-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes Principales</span></p>
-                                                <ul className="list-disc pl-5 text-sm space-y-1">
-                                                    <li><strong>upscale_method:</strong> <code>lanczos</code>. Es el algoritmo matemático más nítido para reducir imágenes, ideal para no perder calidad visual en el Downsampling (reducción del tamaño de la imagen eliminando pixeles).</li>
-                                                    <li><strong>megapixels:</strong> Define el tamaño matemático final.
-                                                        <ul className="list-[circle] pl-5 mt-1 text-zinc-400">
-                                                            <li><code>2.0</code> = 1080p (Full HD).</li>
-                                                            <li><code>4.0</code> = 2K.</li>
-                                                            <li><code>8.0</code> = 4K.</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><strong>resolution_steps</strong> <code>:1</code> Este valor define en cuantos pasos se hara la reduccion, entre más grande sea la imagen de entrada más pasos se recomienda poner, para no perder la nitidez de la imagen original</li>
-                                                </ul>
-                                            </div>
-                                            <p className="text-xs text-amber-500 mt-3 pt-2 border-t border-amber-500/10">💡 <strong>Nota:</strong> Si la GPU es de 8GB de VRAM o menor, procurar mantener el valor entre 2.0 y 4.0 para evitar errores de <em>Out of Memory</em>.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Etapa 2 */}
-                                <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 text-zinc-400 leading-relaxed shadow-inner backdrop-blur-sm space-y-4">
-                                    <h3 className="text-xl font-bold text-rose-400 mb-2">ETAPA 2: Refinamiento Global (ControlNet + KSampler)</h3>
-                                    <p>Aquí es donde el modelo difusor ("Realistic Vision") repinta la imagen en alta definición para infundirle realismo y corregir imperfecciones, pero está "amarrado" por ControlNet para obligarlo a respetar escrupulosamente los contornos de la foto original.</p>
-
-                                    <div className="space-y-4 mt-4 text-zinc-300">
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">5. CheckpointLoaderSimple (Cargador de Modelo Principal)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Es el cerebro creativo del flujo.</p>
-                                            <p className="text-sm mt-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes</span> <span className="font-medium text-zinc-200 ml-2">ckpt_name:</span> <code>RealisticVisionV60</code>. Perfecto para fotografías analógicas y realistas.</p>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">6. ControlNetLoader (Cargador ControlNet)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Carga a nuestro "policía digital" que vigila a la IA generativa.</p>
-                                            <p className="text-sm mt-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes</span> <span className="font-medium text-zinc-200 ml-2">control_net_name:</span> Modelo tipo <code>Tile</code> (mosaico). Este modelo es la pieza angular de todo el workflow: literalmente le dice a la IA "Mejora los detalles y la textura, pero bajo ningún pretexto cambies la estructura general ni crees objetos nuevos irreales".</p>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">7. CLIP Text Encode (Prompts Globales)</h4>
-                                            <p className="text-sm mt-1 mb-2"><strong>Función:</strong> Envía la directiva de texto para orientar la pincelada base de la IA generativa a lo largo y ancho del póster de la foto.</p>
-                                            <ul className="list-disc pl-5 text-sm space-y-1">
-                                                <li><strong className="text-emerald-400">Positivo:</strong> Incluimos modificadores de alta lealtad como <code>Masterpiece, sharp focus, 8k</code>.</li>
-                                                <li><strong className="text-red-400">Negativo:</strong> Expulsamos los detritos visuales con <code>blur, low quality, watermark</code>.</li>
-                                            </ul>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">8. VAE Encode</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Este bloque se asemeja a un compresor zip que traduce tu imagen RGB (píxeles reales) hacia un estado transitorio y matemático llamado espacio "Latente", que es el entorno natural de ruido tridimensional en donde las IAs de difusión son capaces de operar sus transformaciones.</p>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">9. ApplyContro
-                                                lNet (Aplicar ControlNet)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Es la batidora que fusiona la imagen original condicional junto las instrucciones estrictas del ControlNet Tile.</p>
-                                            <p className="text-sm mt-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes</span> <span className="font-medium text-zinc-200 ml-2">strength (Fuerza):</span> <code>1.0</code>. Esto impone que el sistema estructure el layout de la pieza respetando la original al 100%. Mutilar o rebajar este número incrementaría dramáticamente el nivel de alucinaciones locas que produciría el generador.</p>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">10. KSampler (El Horno de Renderizado)</h4>
-                                            <p className="text-sm mt-1 mb-2"><strong>Función:</strong> El motor principal. Aquí ocurre la magia pura del proceso denominado "Img2Img" (Imagen a Imagen). Lee la data base, el ControlNet, el prompt y ejecuta las pasadas iterativas reduciendo el ruido hasta hornear un re-pintado foto-realista.</p>
-                                            <div className="bg-zinc-900/50 rounded-lg p-3 border border-white/5">
-                                                <ul className="list-disc pl-5 text-sm space-y-2">
-                                                    <li>
-                                                        <span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20 mr-2">Ajuste Crítico</span>
-                                                        <strong>denoise (Eliminar ruido / Creatividad IA):</strong> Normalmente se mantiene en <code>0.3</code>. Configurar correctamente esto hace o destruye la imagen:
-                                                        <ul className="list-[square] pl-5 mt-2 space-y-1 text-zinc-400">
-                                                            <li><code>0.1 - 0.25:</code> Prácticamente no modifica texturas, limpia fallos leves sin ser un restaurador poderoso.</li>
-                                                            <li><code className="text-rose-400 font-bold">0.3 - 0.4:</code> (Punto dulce de restauración) Limpia el ruido en fotos viejas pero te ayuda a regenerar el granulado fotográfico de la piel, hilos en la ropa y luces.</li>
-                                                            <li><code>0.5+:</code> El modelo se empieza a volver muy proactivo y modificará la identidad original de las personas o incluso borrar ojeras de formas ficticias, o mutar collares por otras bisuterías totalmente distintas.</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><strong>steps (Pasos):</strong> <code>25</code> iteraciones de reducción de ruido son el umbral óptimo calidad-tiempo para RealisticVision.</li>
-                                                    <li><strong>sampler:</strong> <code>dpmpp_2m</code>. El estándar de oro técnico hoy en día para generar retratos o personas reales que aparenten no estar generados por CGI.</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">11. VAEDecodeTiled (Decodificar en Mosaico)</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Ejecuta el proceso inverso al nodo de Encode (8). Toma la ruidosa ecuación latente modificada y repintada por la IA y la materializa de vuelta al mundo normal convirtiéndola de nuevo en píxeles RGB legibles y exportables (archivos con extensión PNG).</p>
-                                            <p className="text-sm mt-2 text-zinc-400"><strong>¿Por qué se llama "Tiled" (Por trozos o segmentos) y no normal?:</strong> Principalmente porque a estas alturas nuestra imagen internamente posee un peso demencial de subinformación tridimensional. Si le ordenamos al programa exportar un 4K todo de un solo golpe (toda el área), es factible que superemos la capacidad de carga del cuello de botella de la memoria de video y colapse la aplicación dando error generalizado. Decodificar por azulejos ("Tiled") significa enviar a render por zonas segmentadas (primero renderiza una esquina de la foto, la saca y la pega, luego sigue a la próxima zona, hasta completar e hilar todo el canvas de 4K).</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Etapa 3 */}
-                                <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 text-zinc-400 leading-relaxed shadow-inner backdrop-blur-sm space-y-4 relative overflow-hidden">
-                                    <div className="absolute -right-10 -top-10 w-32 h-32 bg-rose-500/10 rounded-full blur-3xl"></div>
-                                    <h3 className="text-xl font-bold text-rose-400 mb-2 relative">ETAPA 3: El Cirujano de Rostros (FaceDetailer)</h3>
-                                    <p className="relative">La imagen compuesta global a gran escala probablemente se vea asombrosa ya, pero los detalles intrincados —especialmente rostros humanos lejanos al foco principal de la cámara— comúnmente exhibirán dientes extraños u ojos de pez, producto indirecto del mismo escalado orgánico. Este paso correctivo extra está diseñado para resolver ese inconveniente, detectando micro áreas espaciales ("boxes" faciales) para reconstruirlas con alta fidelidad usando un minirender secundario y volverlas a unir cosidas sin que notes la pega.</p>
-
-                                    <div className="space-y-4 mt-6 text-zinc-300 relative">
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5">
-                                            <h4 className="font-bold text-white">12. UltralyticsDetectorProvider & SAMLoader</h4>
-                                            <p className="text-sm mt-1"><strong>Función:</strong> Constituyen los módulos del sensor de lectura de segmentación de objetos visuales basados en Yolo. Actúan como los "ojos" del flujo para escanear a nivel rasterizado en qué coordenadas numéricas X e Y está localizado o dibujado un rostro.</p>
-                                            <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
-                                                <li><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes</span> <span className="font-medium text-zinc-200 ml-2">model_name:</span> <code>face_yolov8m</code>. Este modelo está entrenado pre-conceptualmente y es responsable de dibujar un rectángulo limitador preciso para capturar la cara donde sea hallada.</li>
-                                                <li><strong>SAM (Segment Anything Model):</strong> Complementa al anterior. Convierte el cuadrado simplista que YOLO descubrió, transformándolo en un recorte silueteado por pixeles del contorno real facial, aislando mejillas y pelos de forma más precisa de espaldas.</li>
-                                            </ul>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-white/5 flex flex-col sm:flex-row gap-4">
-                                            <div className="flex-1">
-                                                <h4 className="font-bold text-white">13. CLIP Text Encode (Prompts Exclusivo para Rostro)</h4>
-                                                <p className="text-sm mt-1"><strong>Función Extra:</strong> Estos Nodos extra de texto se conectan singularmente al FaceDetailer. Sus dictados textuales aplican modificadores semánticos que prioricen y dirijan atención absoluta a la generación fina facial, por ejemplo listando etiquetas como <code>skin texture, highly detailed skin pores</code> contra los prompts negativos de no portar maquillajes plastificados.</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="bg-zinc-950/50 p-4 rounded-xl border border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.1)]">
-                                            <h4 className="font-bold text-white flex items-center gap-2">
-                                                <span className="bg-rose-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs"></span>
-                                                14. FaceDetailer
-                                            </h4>
-                                            <p className="text-sm mt-2"><strong>Función:</strong> Este bloque unifica y concreta la reconstrucción final. Ejecutará suboperaciones internas equivalentes a recortar la miniatura del pedacito de cara detectada, la reescala al vacío dándole su propia resolución extra alta dentro de su recuadro privado, re-inyecta allí el proceso Img2Img, pinta una cara restaurada soberbia, luego desescala el mosaico procesado de vuelta a su cuadrante de origen, lo alinea, camufla el difuminado exterior o borde ("feather") y plasta la textura reconstruida en la misma posición relativa sobre su base nodriza sin interrumpir la composición original de luz. Todo automatizado.</p>
-                                            <div className="mt-3 bg-zinc-900/50 rounded-lg p-3 border border-rose-500/10">
-                                                <p className="text-sm mb-2"><span className="text-rose-500 font-mono text-xs bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Ajustes Vitales</span></p>
-                                                <ul className="list-disc pl-5 text-sm space-y-2">
-                                                    <li><strong>guide_size:</strong> <code>512</code>. A este valor se va a extruir la minúscula cara interna de la foto antes de pintarla. Si aspiras a un detalle microoscópico en fotogramas de primeros planos, súbelo a <code>768</code> o <code>1024</code>, a costa de una inmensa pero provechosa lentitud del programa en general.</li>
-                                                    <li><strong>guide_size_for:</strong> <code>True</code>. Bandera para activar la obligatoriefad interna antes mencionada.</li>
-                                                    <li><strong>denoise:</strong> Ajustado idealmente de base en <code>0.4</code> o <code>0.5</code>. Debido a que aquí queremos una mutación de píxeles mucho más perdonable para ayudar a los ojos perdidos y dientes fundidos a que logren reconstruir estructura nueva, el porcentaje es más alto comparado a los de la etapa global.</li>
-                                                    <li><strong>drop_size:</strong> <code>10</code>. Regla crucial que prohíbe y aborta el intento de reconstruir las caritas ultra microscópicas en el horizonte (tipo de una masa en la calle), si el borde de recuadro total mide menos de diez milímetros relativos (o 10 píxeles). Ahorra cómputo valiosísimo intentando reparar manchas borrosas sin importancia estética en macro en la escena.</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    );
+                                })}
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </Reveal>
+                </section>
 
-                    <div className="lg:col-span-2 space-y-6">
-                        <h3 className="text-lg font-bold text-zinc-200 border-b border-white/10 pb-2">
-                            Galería de Resultados
-                        </h3>
-                        <p className="text-sm text-zinc-500">Comparación antes y después del workflow de IA. <span className="text-rose-400">Haz clic para comparar con lupa.</span></p>
-                        {imageIds.map((id, idx) => (
-                            <div
-                                key={id}
-                                className="rounded-2xl overflow-hidden border border-white/5 bg-zinc-900/40 backdrop-blur-sm shadow-lg hover:border-rose-500/30 transition-all duration-300 cursor-pointer group/card"
-                                onClick={() => setViewerIndex(idx)}
-                            >
-                                <div className="flex items-center justify-between px-4 py-2 border-b border-white/5">
-                                    <span className="text-xs font-mono text-zinc-500">Muestra #{idx + 1}</span>
-                                    <span className="text-xs text-zinc-600 group-hover/card:text-rose-400 transition-colors flex items-center gap-1">
-                                        <Search size={12} />
-                                        Comparar
-                                    </span>
-                                </div>
-                                <div className="grid grid-cols-2 gap-px bg-white/5">
-                                    <div className="relative group bg-zinc-950 overflow-hidden">
-                                        <span className="absolute top-2 left-2 z-10 text-[10px] font-bold uppercase tracking-widest bg-zinc-900/80 text-zinc-400 px-2 py-0.5 rounded-md border border-white/10">Antes</span>
-                                        <img
-                                            src={`/Portafolio/Project_AI_WorkFlow/antes_${id}.png`}
-                                            alt={`Antes - Muestra ${id}`}
-                                            className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
-                                            loading="lazy"
-                                        />
-                                    </div>
-                                    <div className="relative group bg-zinc-950 overflow-hidden">
-                                        <span className="absolute top-2 left-2 z-10 text-[10px] font-bold uppercase tracking-widest bg-rose-500/80 text-white px-2 py-0.5 rounded-md border border-rose-400/30">Después</span>
-                                        <img
-                                            src={`/Portafolio/Project_AI_WorkFlow/despues_${id}.png`}
-                                            alt={`Después - Muestra ${id}`}
-                                            className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
-                                            loading="lazy"
-                                        />
-                                    </div>
-                                </div>
+                {/* ─── 04 · The complete graph ────────────────────────── */}
+                <section className="pt-24">
+                    <SectionMarker index="04" label="The Complete Graph" />
+                    <Reveal>
+                        <div className="rounded-2xl overflow-hidden border border-white/8 bg-zinc-900/40 backdrop-blur-sm shadow-lg">
+                            <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+                                <span className="text-xs font-mono text-zinc-500 flex items-center gap-2">
+                                    <Workflow size={13} className="text-rose-400" /> comfyui · full workflow
+                                </span>
+                                <a href="/Portafolio/Project_AI_WorkFlow/preview.webp" target="_blank" rel="noopener noreferrer"
+                                    className="text-xs text-zinc-600 hover:text-rose-400 transition-colors flex items-center gap-1">
+                                    <Maximize2 size={12} /> open full size
+                                </a>
                             </div>
-                        ))}
-                    </div>
+                            <a href="/Portafolio/Project_AI_WorkFlow/preview.webp" target="_blank" rel="noopener noreferrer" className="block">
+                                <img src="/Portafolio/Project_AI_WorkFlow/preview.webp" alt="Full ComfyUI restoration workflow graph"
+                                    className="w-full h-auto object-contain hover:scale-[1.02] transition-transform duration-500" loading="lazy" />
+                            </a>
+                        </div>
+                    </Reveal>
+                </section>
+
+                {/* ─── next ───────────────────────────────────────────── */}
+                <div className="pt-20 mt-16 border-t border-white/10 flex items-center justify-between">
+                    <Link to="/" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group">
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> all work
+                    </Link>
+                    <Link to="/project/4" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group text-right">
+                        next · data analysis <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </Link>
                 </div>
-
-                {/* Hardware Specs Section */}
-                <section className="mt-16">
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <span className="text-rose-500">03.</span> Entorno de Ejecución
-                    </h2>
-                    <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-8 backdrop-blur-sm shadow-inner relative overflow-hidden">
-                        <div className="absolute -right-16 -bottom-16 w-48 h-48 bg-rose-500/5 rounded-full blur-3xl"></div>
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8 relative">
-                            <div className="bg-zinc-800/80 p-4 rounded-2xl border border-white/10">
-                                <Laptop size={40} className="text-rose-400" />
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-white">Lenovo LOQ 15IRX10</h3>
-                                <p className="text-zinc-500 text-sm mt-1">Laptop utilizada para ejecutar el workflow de restauración</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 relative">
-                            <div className="bg-zinc-950/50 rounded-xl p-5 border border-white/5 flex items-start gap-4 hover:border-rose-500/20 transition-colors">
-                                <div className="bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">
-                                    <Cpu size={22} className="text-rose-400" />
-                                </div>
-                                <div>
-                                    <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Procesador</p>
-                                    <p className="text-white font-semibold mt-1">Intel Core i7 13650HX</p>
-                                    <p className="text-zinc-500 text-xs mt-0.5">14 núcleos / 20 hilos</p>
-                                </div>
-                            </div>
-                            <div className="bg-zinc-950/50 rounded-xl p-5 border border-white/5 flex items-start gap-4 hover:border-rose-500/20 transition-colors">
-                                <div className="bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">
-                                    <MemoryStick size={22} className="text-rose-400" />
-                                </div>
-                                <div>
-                                    <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Memoria RAM</p>
-                                    <p className="text-white font-semibold mt-1">24 GB</p>
-                                    <p className="text-zinc-500 text-xs mt-0.5">DDR5</p>
-                                </div>
-                            </div>
-                            <div className="bg-zinc-950/50 rounded-xl p-5 border border-white/5 flex items-start gap-4 hover:border-rose-500/20 transition-colors">
-                                <div className="bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">
-                                    <Monitor size={22} className="text-rose-400" />
-                                </div>
-                                <div>
-                                    <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Tarjeta de Video (GPU)</p>
-                                    <p className="text-white font-semibold mt-1">NVIDIA RTX 5050</p>
-                                    <p className="text-zinc-500 text-xs mt-0.5">8 GB de VRAM</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Workflow Preview Image */}
-                <section className="mt-16 mb-8">
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <span className="text-rose-500">04.</span> Vista del Workflow en ComfyUI
-                    </h2>
-                    <div className="rounded-2xl overflow-hidden border border-white/5 bg-zinc-900/40 backdrop-blur-sm shadow-lg">
-                        <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between">
-                            <span className="text-xs font-mono text-zinc-500">ComfyUI — Workflow completo</span>
-                            <span className="text-xs text-zinc-600">Haz clic para ampliar</span>
-                        </div>
-                        <a href="/Portafolio/Project_AI_WorkFlow/preview.png" target="_blank" rel="noopener noreferrer" className="block">
-                            <img
-                                src="/Portafolio/Project_AI_WorkFlow/preview.png"
-                                alt="Vista completa del workflow de restauración en ComfyUI"
-                                className="w-full h-auto object-contain hover:scale-[1.02] transition-transform duration-500"
-                                loading="lazy"
-                            />
-                        </a>
-                    </div>
-                </section>
             </div>
 
-            {/* Image Comparison Viewer Modal */}
             <ImageComparisonViewer
                 isOpen={viewerIndex !== null}
                 onClose={() => setViewerIndex(null)}

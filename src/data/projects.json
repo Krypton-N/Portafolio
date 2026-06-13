@@ -1,9 +1,9 @@
 [
     {
         "id": 1,
-        "title": "Solucionador de Ecuaciones Diferenciales",
-        "description": "Software de escritorio con UI desarrollada en python para resolver ecuaciones de n-orden (Cauchy-Euler, Variación de parámetros).",
-        "image": "/Portafolio/PortadasProjects/Portada_EDOS.png",
+        "title": "N-th Order Differential Equation Solver",
+        "description": "Desktop application built in Python that solves n-th order equations (Cauchy-Euler, Variation of Parameters) with step-by-step LaTeX output.",
+        "image": "/Portafolio/PortadasProjects/Portada_EDOS.webp",
         "tags": [
             "Software Dev",
             "Python",
@@ -14,18 +14,13 @@
             "demo": "#"
         },
         "category": "dev",
-        "longDescription": "Este proyecto nació de la necesidad de automatizar la resolución de ecuaciones diferenciales complejas en el ámbito académico. El software permite ingresar ecuaciones de orden N y selecciona automáticamente el método de resolución más adecuado (Coeficientes Indeterminados, Variación de Parámetros o Cauchy-Euler), además se podemos ingresar condicion de valor inicial .",
-        "galleryImages": [
-            "public/images/projects/Project_AntigravityEDOs/antigravity_interface.png",
-            "https://placehold.co/800x450/222/FFF?text=Step+by+Step+Solution"
-        ],
-        "developmentProcess": "El desarrollo se centró en la creación de un parser matemático y un motor de resolución simbólica. Se utilizó Pyhton para la interfaz gráfica, implementando un diseño oscuro personalizado para mejorar la experiencia de usuario durante largas sesiones de estudio."
+        "longDescription": "This project was born from the need to automate the resolution of complex differential equations in an academic setting. The software accepts n-th order equations and automatically selects the most suitable solving method (Undetermined Coefficients, Variation of Parameters, or Cauchy-Euler), with support for initial value conditions."
     },
     {
         "id": 2,
-        "title": "Workflow de Restauración de Imágenes IA",
-        "description": "Pipeline automatizado utilizando ComfyUI para upscaling y restauración de imágenes antiguas mediante modelos difusores.",
-        "image": "/Portafolio/PortadasProjects/Portada_ComfyImg.png",
+        "title": "AI Image Restoration Workflow",
+        "description": "Automated ComfyUI pipeline for upscaling and restoring old photographs using diffusion models and face-aware reconstruction.",
+        "image": "/Portafolio/PortadasProjects/Portada_ComfyImg.webp",
         "tags": [
             "AI",
             "Automation",
@@ -36,18 +31,13 @@
             "demo": null
         },
         "category": "ai",
-        "longDescription": "Desarrollo de un workflow de IA diseñado para transformar imágenes borrosas en piezas de alta definición (2K/4K). A diferencia de un escalado tradicional, este sistema entiende la imagen para reconstruirla en tres fases. La primera fase es la Etapa Fisica :Agranda la imagen matematicamente. 2. Etapa Artistica (Global): Refina texturas y luces sin cambiar la composición. 3. Etapa Quirurgica (Rostros): Dertecta los rostros y los reconstruye en alta definición. ",
-        "galleryImages": [
-            "https://placehold.co/800x450/111/FFF?text=Workflow+Node+Graph",
-            "https://placehold.co/800x450/222/FFF?text=Before+After+Comparison"
-        ],
-        "developmentProcess": "Etapa 1: Preparacion y escalado inicial. El objetivo aqui es hacer el lienzo mas grande antes de que la IA empiece a trabajar. Para esto se usa el nodo de 1. *Load Image* que nos permite cargar la imagen desde la pc. 2. *UpScaleModel*: Este nodo los permite cargar el modelo de reescalado, en este ejercicio usamos el modelo de [4x-UltraSharp] que es excelente por que nos permite mantener la nitidez sin alucinaciones. 3. *ImageUpScaleWithModel*: Aplica el modelo cargado en el nodo 2 a la imagen cargada en el nodo 1. 4. "
+        "longDescription": "An AI workflow designed to transform blurry images into high-definition pieces (2K/4K). Unlike traditional upscaling, this system understands the image and reconstructs it in three phases: 1. Physical stage — enlarges the image mathematically. 2. Artistic stage (global) — refines textures and lighting without altering composition. 3. Surgical stage (faces) — detects faces and rebuilds them in high definition."
     },
     {
         "id": 4,
-        "title": "Data Analyst: Análisis de Atención en Estudiantes",
-        "description": "Investigación estadística sobre la correlación entre uso de redes sociales y atención cognitiva en ingeniería.",
-        "image": "/Portafolio/PortadasProjects/Portada_AtFr.png",
+        "title": "Data Analysis: Attention Span in Students",
+        "description": "Statistical research on the correlation between short-form social media usage and cognitive attention in engineering students.",
+        "image": "/Portafolio/PortadasProjects/Portada_AtFr.webp",
         "tags": [
             "Data Science",
             "Research",
@@ -58,18 +48,12 @@
             "demo": "#"
         },
         "category": "data",
-        "longDescription": "Estudio cuantitativo que analiza patrones de comportamiento digital en estudiantes universitarios. Se utilizaron técnicas de minería de datos para identificar correlaciones significativas entre el tiempo de pantalla y el rendimiento académico.",
-        "galleryImages": [
-            "https://placehold.co/800x450/111/FFF?text=Data+Heatmap",
-            "https://placehold.co/800x450/222/FFF?text=Regression+Analysis"
-        ],
-        "developmentProcess": "Se recopilaron datos mediante encuestas y logs de actividad (anonimizados). El análisis se realizó en Python utilizando Pandas y Scikit-learn para generar modelos predictivos y visualizaciones."
+        "longDescription": "A quantitative study analyzing digital behavior patterns in university students. Data mining techniques were used to identify significant correlations between screen time and academic performance, including an OLS regression model (R² = 0.692) and a critical exposure threshold."
     },
     {
         "id": 3,
-        "title": "Hybrid RAG con Evaluación RAGAS",
-        "description": "Sistema de recuperación aumentada de generación (RAG) híbrido, que combina búsqueda semántica densa y dispersa.",
-        "image": "/Portafolio/PortadasProjects/Portada_WIP.png",
+        "title": "Hybrid RAG with RAGAS Evaluation",
+        "description": "Hybrid Retrieval-Augmented Generation system combining dense and sparse semantic search, with automated quality evaluation.",
         "coverIcons": ["BrainCircuit", "Layers", "BarChart3", "FlaskConical"],
         "wip": true,
         "tags": [
@@ -84,11 +68,6 @@
             "demo": null
         },
         "category": "ai",
-        "longDescription": "Desarrollo completo de un pipeline RAG híbrido que combina recuperación densa (vectorial) y dispersa (BM25/TF-IDF). El sistema incluye un módulo de evaluación automática usando el framework RAGAS para medir faithfulness, answer relevancy y context precision de forma cuantitativa. La arquitectura contempla indexación con FAISS, gestión de prompts con LangChain y un evaluador automático que genera métricas de calidad por query.",
-        "galleryImages": [
-            "public/images/projects/Project_RAGEvaluation/ragas_metrics_dashboard.png",
-            "https://placehold.co/800x450/111/FFF?text=Hybrid+Retrieval+Flow"
-        ],
-        "developmentProcess": "Se implementaron dos estrategias de recuperación independientes (búsqueda densa sobre embeddings y búsqueda dispersa con BM25). Ambos resultados se fusionan mediante un sistema de reranking que prioriza documentos relevantes y filtra artefactos. El evaluador RAGAS se ejecuta post-generación para calcular métricas usando un LLM como juez. Los resultados se almacenan en metrics.json para trazabilidad."
+        "longDescription": "End-to-end development of a hybrid RAG pipeline combining dense (vector) and sparse (BM25/TF-IDF) retrieval. The system includes an automated evaluation module using the RAGAS framework to quantitatively measure faithfulness, answer relevancy, and context precision. The architecture covers FAISS indexing, prompt management with LangChain, and an automatic evaluator that produces per-query quality metrics stored in metrics.json for traceability."
     }
-]
+]

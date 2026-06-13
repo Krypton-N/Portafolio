@@ -1,16 +1,16 @@
 [
   {
-    "category": "Lenguajes & Backend",
+    "category": "Languages & Backend",
     "items": [
       "Python",
       "Java",
       "SQL",
       "C",
-      "API REST"
+      "REST APIs"
     ]
   },
   {
-    "category": "IA & Data Science",
+    "category": "AI & Data Science",
     "items": [
       "ComfyUI",
       "TensorFlow",
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "category": "Herramientas & DevOps",
+    "category": "Tools & DevOps",
     "items": [
       "Linux",
       "Git/GitHub",

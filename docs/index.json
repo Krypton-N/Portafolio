@@ -5,6 +5,102 @@
     },
     "guides": [
         {
+            "file": "docs/GitWorkflow.md",
+            "title": "Git Workflow — Pushing Changes to GitHub",
+            "summary": "Quick reference for committing and pushing changes to GitHub. Covers the standard workflow (git add, commit, push), commit message conventions, and useful git commands.",
+            "tags": [
+                "git",
+                "github",
+                "workflow",
+                "deployment",
+                "version-control"
+            ],
+            "keywords": [
+                "git add",
+                "git commit",
+                "git push",
+                "git status",
+                "commit message",
+                "staging"
+            ],
+            "modifies": [],
+            "when_to_read": [
+                "Pushing changes to GitHub",
+                "Committing code with proper messages",
+                "Recovering from git mistakes",
+                "Checking repository status"
+            ]
+        },
+        {
+            "file": "docs/RedesignPlan.md",
+            "title": "Redesign Master Plan — Living Document",
+            "summary": "Single source of truth for the portfolio redesign: approved decisions, completed Quick Wins (Phase 0) and Visual System (Phase 1), the upcoming Medium Impact phase (fonts, lenis/motion, tensor-field shader, 5-act home, project page refactor), the final RAG phase, and the quality gates. Update checkboxes here as work progresses.",
+            "tags": [
+                "plan",
+                "roadmap",
+                "redesign",
+                "status",
+                "phases"
+            ],
+            "keywords": [
+                "master plan",
+                "quick wins",
+                "medium impact",
+                "tensor field",
+                "RAG",
+                "Lighthouse",
+                "quality gates",
+                "phase 2",
+                "checklist"
+            ],
+            "modifies": [],
+            "when_to_read": [
+                "Starting any redesign session — read this FIRST to know current status",
+                "Deciding what to work on next",
+                "Marking a step as completed",
+                "Checking approved decisions and constraints"
+            ]
+        },
+        {
+            "file": "docs/VisualSystem.md",
+            "title": "Visual System — Tensor Field + Research Log Redesign",
+            "summary": "Approved creative direction and design system for the portfolio redesign: typography proposals, design tokens (color/space/motion), tensor-field WebGL shader spec, 5-act home architecture wireframes, and the Medium Impact implementation order.",
+            "tags": [
+                "design-system",
+                "redesign",
+                "typography",
+                "tokens",
+                "shader",
+                "webgl",
+                "motion",
+                "performance"
+            ],
+            "keywords": [
+                "tensor field",
+                "loss counter",
+                "uTemperature",
+                "lenis",
+                "motion",
+                "ogl",
+                "Geist",
+                "Space Grotesk",
+                "design tokens",
+                "5 acts",
+                "Lighthouse"
+            ],
+            "modifies": [
+                "src/index.css",
+                "src/App.jsx",
+                "src/components/sections/",
+                "src/pages/HomePage.jsx"
+            ],
+            "when_to_read": [
+                "Working on the redesign (shader, scroll choreography, home re-architecture)",
+                "Choosing colors, spacing, typography, or motion values",
+                "Understanding the approved creative direction and constraints"
+            ]
+        },
+        {
             "file": "docs/ProjectCard.md",
             "title": "ProjectCard — Adaptive Card System",
             "summary": "How project cards work in the gallery. Covers the two card modes (Image vs Visual), the complete projects.json schema, and step-by-step instructions for adding new projects.",
