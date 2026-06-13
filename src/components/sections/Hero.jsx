@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion as Motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import Button from '../ui/Button';
-import DecodeText from '../motion/DecodeText';
+import ScrambleText from '../motion/ScrambleText';
 import { scrollTo } from '../../lib/smoothScroll';
+
+// The closing line cycles through variants — vida continua via scrambleText
+const LEARN_CYCLE = ['that learn.', 'that scale.', 'that reason.', 'that adapt.', 'that ship.'];
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -46,23 +49,22 @@ const Hero = () => {
                     <span></span>
                 </Motion.div>
 
-                {/* Display headline — decode-in */}
+                {/* Display headline — scrambles in on load; the last line cycles variants */}
                 <h1 className="font-display text-5xl sm:text-7xl lg:text-[7rem] font-bold leading-[0.95] tracking-tight text-white">
-                    <DecodeText as="span" text="AI Engineer." className="block" delay={150} />
-                    <DecodeText
-                        as="span"
+                    <ScrambleText text="AI Engineer." className="block w-fit" delay={150} />
+                    <ScrambleText
                         text="I build systems"
-                        className="block bg-gradient-to-r from-rose-500 to-rose-300 bg-clip-text text-transparent"
+                        className="block w-fit bg-gradient-to-r from-rose-500 to-rose-300 bg-clip-text text-transparent"
                         delay={520}
                     />
-                    <DecodeText as="span" text="that learn." className="block" delay={900} />
+                    <ScrambleText cycle={LEARN_CYCLE} className="block w-fit text-rose-100" delay={1000} interval={3600} />
                 </h1>
 
                 <Motion.p
                     {...fade(1.1)}
                     className="text-lg md:text-xl text-zinc-400 max-w-xl mt-8 mb-12 leading-relaxed"
                 >
-                    Solid software engineering and applied Artificial Intelligence —
+                    Solid software engineering and applied Artificial Intelligence 
                     turning complex data into systems that work.
                 </Motion.p>
 
