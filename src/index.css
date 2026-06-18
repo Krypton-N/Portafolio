@@ -1,18 +1,89 @@
+/* ── Self-hosted variable fonts (Option B — VisualSystem.md §1) ── */
+@import "@fontsource-variable/space-grotesk"; /* display, ≥30px only */
+@import "@fontsource-variable/inter";          /* body                */
+@import "@fontsource-variable/jetbrains-mono"; /* metadata & metrics  */
+
 @import "tailwindcss";
 
+/* ── Design tokens — VisualSystem.md §2 ── */
 @theme {
-  --color-neon: #f43f5e;
-  /* Rose-500 */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Typography */
+  --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: "Space Grotesk Variable", "Inter Variable", sans-serif;
+  --font-mono: "JetBrains Mono Variable", Consolas, "Courier New", monospace;
+
+  /* Fluid type scale */
+  --text-fluid-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --text-fluid-sm: clamp(0.875rem, 0.84rem + 0.2vw, 0.9375rem);
+  --text-fluid-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-fluid-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-fluid-xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --text-fluid-2xl: clamp(2rem, 1.6rem + 2vw, 3rem);
+  --text-fluid-3xl: clamp(2.75rem, 2rem + 3.75vw, 5rem);
+  --text-hero: clamp(3.5rem, 2.5rem + 5vw, 8rem);
+  --text-hero--line-height: 1.05;
+  --text-hero--letter-spacing: -0.03em;
+
+  /* Surfaces — deep black base, one hue */
+  --color-bg: #050507;
+  --color-surface-1: #0c0c0f;
+  --color-surface-2: #121216;
+  --color-line: rgba(255, 255, 255, 0.06);
+  --color-line-hi: rgba(255, 255, 255, 0.12);
+
+  /* Text */
+  --color-text-hi: #fafafa;
+  --color-text-body: #a1a1aa;
+  --color-text-lo: #52525b;
+
+  /* Accent ramp — the ONLY hue on the site */
+  --color-accent: #f43f5e;
+  --color-accent-hi: #fb7185;
+  --color-accent-lo: #9f1239;
+  --color-accent-glow: rgba(244, 63, 94, 0.25);
+
+  /* Radii — one radius per component class */
+  --radius-chip: 8px;
+  --radius-card: 14px;
+  --radius-modal: 22px;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-med: 400ms;
+  --dur-slow: 800ms;
 }
 
 :root {
   color-scheme: dark;
-  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-zinc-950 text-zinc-100 antialiased font-sans selection:bg-rose-500/30 selection:text-rose-200;
+  @apply bg-bg text-zinc-100 antialiased font-sans selection:bg-rose-500/30 selection:text-rose-200;
+}
+
+/* Display headings: tight tracking is part of the typographic identity */
+.font-display {
+  letter-spacing: -0.02em;
+}
+
+/* ── Lenis smooth scroll (https://github.com/darkroomengineering/lenis) ── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* Custom Scrollbar */
@@ -21,13 +92,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-900;
+  @apply bg-zinc-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-700 rounded-full;
+  @apply bg-zinc-700 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-600;
+  @apply bg-zinc-600;
 }

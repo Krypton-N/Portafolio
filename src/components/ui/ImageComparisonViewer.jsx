@@ -11,6 +11,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
     const [lensPos, setLensPos] = useState({ x: 0.5, y: 0.5 });
     const [isLensActive, setIsLensActive] = useState(false);
     const [hoveredSide, setHoveredSide] = useState(null); // 'before' or 'after'
+    const [lensRects, setLensRects] = useState(null); // measured in the mousemove handler, not during render
     const [beforeDims, setBeforeDims] = useState(null);
     const [afterDims, setAfterDims] = useState(null);
     const beforeRef = useRef(null);
@@ -62,6 +63,14 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
         setLensPos({ x, y });
         setIsLensActive(true);
         setHoveredSide(side);
+        setLensRects({
+            before: beforeRef.current
+                ? { width: beforeRef.current.getBoundingClientRect().width, height: beforeRef.current.getBoundingClientRect().height }
+                : null,
+            after: afterRef.current
+                ? { width: afterRef.current.getBoundingClientRect().width, height: afterRef.current.getBoundingClientRect().height }
+                : null,
+        });
     }, []);
 
     const handleMouseLeave = useCallback(() => {
@@ -81,10 +90,9 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
 
     if (!isOpen) return null;
 
-    const renderLens = (imgRef, src, side) => {
-        if (!isLensActive || !imgRef.current) return null;
-
-        const rect = imgRef.current.getBoundingClientRect();
+    const renderLens = (src, side) => {
+        const rect = lensRects?.[side];
+        if (!isLensActive || !rect) return null;
         const lensX = lensPos.x * rect.width;
         const lensY = lensPos.y * rect.height;
 
@@ -160,7 +168,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                 <div className="flex items-center gap-4">
                     <h3 className="text-white font-semibold text-lg">{sampleLabel}</h3>
                     <span className="text-zinc-500 text-sm hidden sm:inline">
-                        {currentIndex + 1} / {images.length} · Mueve el cursor para comparar con la lupa
+                        {currentIndex + 1} / {images.length} · Move the cursor to compare with the magnifier
                     </span>
                 </div>
 
@@ -170,7 +178,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                         <button
                             onClick={() => cycleZoom('down')}
                             className="text-zinc-400 hover:text-rose-400 transition-colors p-1"
-                            title="Reducir zoom de lupa"
+                            title="Decrease magnifier zoom"
                         >
                             <ZoomOut size={18} />
                         </button>
@@ -180,7 +188,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                         <button
                             onClick={() => cycleZoom('up')}
                             className="text-zinc-400 hover:text-rose-400 transition-colors p-1"
-                            title="Aumentar zoom de lupa"
+                            title="Increase magnifier zoom"
                         >
                             <ZoomIn size={18} />
                         </button>
@@ -190,7 +198,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                     <button
                         onClick={onClose}
                         className="text-zinc-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-xl"
-                        title="Cerrar (Esc)"
+                        title="Close (Esc)"
                     >
                         <X size={22} />
                     </button>
@@ -203,7 +211,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                 <div className="flex-1 flex flex-col items-center max-h-full">
                     <div className="mb-3 flex items-center gap-2">
                         <span className="text-xs font-bold uppercase tracking-widest bg-zinc-800 text-zinc-400 px-3 py-1 rounded-lg border border-white/10">
-                            Antes
+                            Before
                         </span>
                     </div>
                     <div
@@ -215,12 +223,12 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                         <img
                             ref={beforeRef}
                             src={beforeSrc}
-                            alt="Antes"
+                            alt="Before"
                             className="max-h-[calc(100vh-200px)] w-auto object-contain select-none"
                             draggable={false}
                             onLoad={(e) => setBeforeDims({ w: e.target.naturalWidth, h: e.target.naturalHeight })}
                         />
-                        {renderLens(beforeRef, beforeSrc, 'before')}
+                        {renderLens(beforeSrc, 'before')}
                     </div>
                     {beforeDims && (
                         <span className="mt-2 text-xs font-mono text-zinc-500 bg-zinc-900/60 px-3 py-1 rounded-lg border border-white/5">
@@ -240,7 +248,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                 <div className="flex-1 flex flex-col items-center max-h-full">
                     <div className="mb-3 flex items-center gap-2">
                         <span className="text-xs font-bold uppercase tracking-widest bg-rose-500/80 text-white px-3 py-1 rounded-lg border border-rose-400/30">
-                            Después
+                            After
                         </span>
                     </div>
                     <div
@@ -252,12 +260,12 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                         <img
                             ref={afterRef}
                             src={afterSrc}
-                            alt="Después"
+                            alt="After"
                             className="max-h-[calc(100vh-200px)] w-auto object-contain select-none"
                             draggable={false}
                             onLoad={(e) => setAfterDims({ w: e.target.naturalWidth, h: e.target.naturalHeight })}
                         />
-                        {renderLens(afterRef, afterSrc, 'after')}
+                        {renderLens(afterSrc, 'after')}
                     </div>
                     {afterDims && (
                         <span className="mt-2 text-xs font-mono text-zinc-500 bg-zinc-900/60 px-3 py-1 rounded-lg border border-white/5">
@@ -272,7 +280,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                 <button
                     onClick={goToPrev}
                     className="fixed left-4 top-1/2 -translate-y-1/2 z-[10000] bg-zinc-900/80 hover:bg-rose-500/80 text-zinc-300 hover:text-white p-3 rounded-full border border-white/10 hover:border-rose-400/50 transition-all duration-200 backdrop-blur-sm shadow-lg hover:shadow-rose-500/20"
-                    title="Anterior (←)"
+                    title="Previous (←)"
                 >
                     <ChevronLeft size={24} />
                 </button>
@@ -281,7 +289,7 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                 <button
                     onClick={goToNext}
                     className="fixed right-4 top-1/2 -translate-y-1/2 z-[10000] bg-zinc-900/80 hover:bg-rose-500/80 text-zinc-300 hover:text-white p-3 rounded-full border border-white/10 hover:border-rose-400/50 transition-all duration-200 backdrop-blur-sm shadow-lg hover:shadow-rose-500/20"
-                    title="Siguiente (→)"
+                    title="Next (→)"
                 >
                     <ChevronRight size={24} />
                 </button>
@@ -292,9 +300,9 @@ const ImageComparisonViewer = ({ isOpen, onClose, images = [], currentIndex = 0,
                 <p className="text-zinc-600 text-xs">
                     <kbd className="bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded text-[10px] border border-white/10 mx-0.5">←</kbd>
                     <kbd className="bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded text-[10px] border border-white/10 mx-0.5">→</kbd>
-                    &nbsp;Navegar&nbsp;·&nbsp;
+                    &nbsp;Navigate&nbsp;·&nbsp;
                     <kbd className="bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded text-[10px] border border-white/10 mx-0.5">Esc</kbd>
-                    &nbsp;Cerrar
+                    &nbsp;Close
                 </p>
             </div>
         </div>

@@ -1,44 +1,95 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion as Motion, useReducedMotion } from 'motion/react';
+import { ArrowRight, ArrowDown } from 'lucide-react';
 import Button from '../ui/Button';
-import { ArrowRight } from 'lucide-react';
+import ScrambleText from '../motion/ScrambleText';
+import { scrollTo } from '../../lib/smoothScroll';
+
+// The closing line cycles through variants — vida continua via scrambleText
+const LEARN_CYCLE = ['that learn.', 'that scale.', 'that reason.', 'that adapt.', 'that ship.'];
 
 const Hero = () => {
     const navigate = useNavigate();
+    const reduce = useReducedMotion();
+
+    const fade = (delay) => ({
+        initial: reduce ? { opacity: 0 } : { opacity: 0, y: 16 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: reduce ? 0 : 0.6, delay: reduce ? 0 : delay, ease: [0.16, 1, 0.3, 1] },
+    });
+
+    const goToWork = (e) => {
+        e.preventDefault();
+        const el = document.getElementById('work');
+        if (el) scrollTo(el);
+    };
+
     return (
-        <section id="inicio" className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
-            {/* Background Orbs */}
-            <div className="absolute top-20 left-10 w-96 h-96 bg-rose-600/20 rounded-full blur-[128px] animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-600/10 rounded-full blur-[128px] animate-pulse delay-1000"></div>
+        <section
+            id="home"
+            className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden"
+        >
+            <div className="container mx-auto px-6 relative z-10 max-w-5xl">
+                {/* Instrumentation status bar */}
+                <Motion.div
+                    {...fade(0)}
+                    className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] sm:text-xs tracking-wider text-zinc-500 mb-8"
+                >
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+                        <span className="relative flex h-1.5 w-1.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-rose-500" />
+                        </span>
+                      {/*Instrumentation status bar <span className="text-rose-300">status: available</span>*/} 
+                    </span>
+                    <span className="text-zinc-700">·</span>
+                    <span>ALAN NOE RODRIGUEZ</span>
+                    <span className="text-zinc-700">·</span>
+                    <span></span>
+                </Motion.div>
 
-            <div className="container mx-auto px-6 relative z-10 text-center">
-                {/* <div className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-8">
-                    <span className="text-sm font-medium text-rose-300">Available for new projects</span>
-                </div> */}
-                <div className="inline-block px-10 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-8 ml-6">
-                    <span className="text-xl font-medium text-rose-300 ">Ing. Alan Noe Rodriguez Flor</span>
-                </div>
-
-                <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-8 text-white">
-                    Construyendo nuevas <br />
-                    <span className="bg-gradient-to-r from-rose-500 to-orange-400 bg-clip-text text-transparent">Neuronas</span>
+                {/* Display headline — scrambles in on load; the last line cycles variants */}
+                <h1 className="font-display text-5xl sm:text-7xl lg:text-[7rem] font-bold leading-[0.95] tracking-tight text-white">
+                    <ScrambleText text="AI Engineer." className="block w-fit" delay={150} />
+                    <ScrambleText
+                        text="I build systems"
+                        className="block w-fit bg-gradient-to-r from-rose-500 to-rose-300 bg-clip-text text-transparent"
+                        delay={520}
+                    />
+                    <ScrambleText cycle={LEARN_CYCLE} className="block w-fit text-rose-100" delay={1000} interval={3600} />
                 </h1>
 
-                <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-                    Programación sólida e Inteligencia Artificial aplicada. Transformando datos complejos en soluciones funcionales
-                </p>
+                <Motion.p
+                    {...fade(1.1)}
+                    className="text-lg md:text-xl text-zinc-400 max-w-xl mt-8 mb-12 leading-relaxed"
+                >
+                    Solid software engineering and applied Artificial Intelligence 
+                    turning complex data into systems that work.
+                </Motion.p>
 
-                <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-                    <Button href="#proyectos">
-                        Ver trabajos <ArrowRight size={20} />
+                <Motion.div {...fade(1.3)} className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                    <Button href="#work" onClick={goToWork}>
+                        View work <ArrowRight size={20} />
                     </Button>
-
                     <Button variant="secondary" onClick={() => navigate('/contact')}>
-                        Contactame
+                        Contact me
                     </Button>
-
-                </div>
+                </Motion.div>
             </div>
+
+            {/* Scroll cue */}
+            {!reduce && (
+                <Motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.8, duration: 0.8 }}
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600"
+                    aria-hidden="true"
+                >
+                    <ArrowDown size={20} className="animate-bounce" />
+                </Motion.div>
+            )}
         </section>
     );
 };

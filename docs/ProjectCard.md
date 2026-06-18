@@ -23,7 +23,7 @@ project entry in projects.json
         │
         └── has "wip": true?
                  │
-                 YES → WIP ribbon "En Desarrollo" + disabled CTA "Próximamente…"
+                 YES → WIP ribbon "In Development" + disabled CTA "Coming soon…"
                  NO  → Normal "Details" button linking to /proyecto/:id
 ```
 
@@ -41,26 +41,19 @@ Used when a project has a `"coverIcons"` field (even if `"image"` is also presen
 
 - Renders a 48-unit tall icon panel (`h-48`) with:
   - A dark zinc base gradient.
-  - An animated shimmer overlay (color varies by `category`).
+  - An animated rose shimmer overlay.
   - A primary large icon (first element in `coverIcons`).
   - Up to 3 secondary smaller icons (elements 2–4 in `coverIcons`).
-- Icon names must be valid **lucide-react** icon names (PascalCase). Browse available icons at https://lucide.dev/icons/
-- If `"wip": true`, a live-pulsing **"En Desarrollo"** ribbon appears top-left.
+- Icon names must exist in the **curated `COVER_ICONS` map** inside `ProjectCard.jsx` (see section 5).
+- If `"wip": true`, a live-pulsing **"In Development"** ribbon appears top-left.
 
 ---
 
-## 2. Color Theming by Category
+## 2. Color Theme
 
-Each `category` value maps to a full color theme automatically. No manual color specification is needed.
+All cards share a **single rose/zinc theme** (`THEME` constant in `ProjectCard.jsx`): rose accent, rose hover glow, zinc surfaces. This is a deliberate brand decision — the site palette is deep black + rose only. Category identity is conveyed by the filter tabs, **not** by card color.
 
-| `category` | Primary accent | Hover glow | Title hover | Secondary icon colors |
-|---|---|---|---|---|
-| `"ai"` | Amber | amber glow | amber | rose, violet, emerald |
-| `"dev"` | Rose | rose glow | rose | amber, violet, emerald |
-| `"data"` | Violet | violet glow | violet | rose, amber, emerald |
-| `"infra"` | Emerald | emerald glow | emerald | rose, amber, violet |
-
-If an unknown category is passed, it falls back to `"dev"` (rose).
+> Historical note: the component previously had per-category themes (amber/violet/emerald). That was removed for color discipline. Do not reintroduce per-category colors without an explicit design decision.
 
 ---
 
@@ -72,31 +65,26 @@ Every entry in `src/data/projects.json` is an object with these fields:
 {
     // ── REQUIRED fields ─────────────────────────────────────
     "id": 5,                          // Unique integer. Used in the detail page route: /proyecto/5
-    "title": "Name of the project",   // Shown as the card heading
+    "title": "Name of the project",   // Shown as the card heading (English)
     "description": "Short summary",   // Shown below the title, capped at 3 lines on the card
     "tags": ["React", "Node"],        // Tech tags rendered as rose badges
     "links": {
         "github": "https://...",      // Use "#" if not yet public. null hides the button.
         "demo": "https://..."         // Use null to hide the Demo button.
     },
-    "category": "dev",                // Controls color theme. One of: "ai" | "dev" | "data" | "infra"
-    "longDescription": "...",         // Full description used on the detail page
-    "galleryImages": [                // Images shown in the detail page gallery sidebar
-        "/path/to/image.png",
-        "https://placehold.co/..."
-    ],
-    "developmentProcess": "...",      // Text shown in the "Cómo se Hizo" section of the detail page
+    "category": "dev",                // Used by the gallery filter tabs. One of: "ai" | "dev" | "data" | "infra"
+    "longDescription": "...",         // Full description, reusable on the detail page
 
     // ── CARD MODE selector (pick one) ────────────────────────
     // Option A — Image mode: provide an image path, omit coverIcons
-    "image": "/Portafolio/PortadasProjects/Portada_MyProject.png",
+    "image": "/Portafolio/PortadasProjects/Portada_MyProject.webp",
 
     // Option B — Visual mode: provide coverIcons, image field is ignored for the card
     "coverIcons": ["BrainCircuit", "Layers", "BarChart3", "FlaskConical"],
 
     // ── OPTIONAL fields ─────────────────────────────────────
     "wip": true                       // Omit or set false for completed projects.
-                                      // When true: shows "En Desarrollo" ribbon,
+                                      // When true: shows "In Development" ribbon,
                                       // disables the Details button.
 }
 ```
@@ -106,18 +94,18 @@ Every entry in `src/data/projects.json` is an object with these fields:
 | Field | Type | Required | Notes |
 |---|---|---|---|
 | `id` | integer | ✅ | Must be unique. Must match a `Project{id}.jsx` detail page if `wip` is false |
-| `title` | string | ✅ | Keep under ~50 chars for clean card display |
-| `description` | string | ✅ | Keep under ~200 chars; truncated at 3 lines on card |
+| `title` | string | ✅ | English. Keep under ~50 chars for clean card display |
+| `description` | string | ✅ | English. Keep under ~200 chars; truncated at 3 lines on card |
 | `tags` | string[] | ✅ | 3–6 tags recommended for visual balance |
 | `links.github` | string \| null | ✅ | `"#"` = placeholder (button hidden on detail page); `null` = no button |
 | `links.demo` | string \| null | ✅ | `null` = no Demo button rendered |
-| `category` | string | ✅ | One of `"ai"`, `"dev"`, `"data"`, `"infra"` |
-| `longDescription` | string | ✅ | Used on detail page. Can be multiple sentences |
-| `galleryImages` | string[] | ✅ | Paths relative to project root or full URLs. Can use placehold.co for placeholders |
-| `developmentProcess` | string | ✅ | Used on detail page "Cómo se Hizo" section |
-| `image` | string | Conditional | Required for Image Mode. Path relative to `public/` |
-| `coverIcons` | string[] | Conditional | Required for Visual Mode. 1–4 lucide-react icon names in PascalCase |
+| `category` | string | ✅ | One of `"ai"`, `"dev"`, `"data"`, `"infra"` — affects filtering only, not card color |
+| `longDescription` | string | ✅ | Reusable on the detail page. Can be multiple sentences |
+| `image` | string | Conditional | Required for Image Mode. Path relative to `public/`. **Use .webp** (covers ≤ ~200 KB) |
+| `coverIcons` | string[] | Conditional | Required for Visual Mode. 1–4 icon names present in `COVER_ICONS` |
 | `wip` | boolean | Optional | Default: `false`. Set `true` for in-progress projects |
+
+> `galleryImages` and `developmentProcess` were removed from the schema (they referenced placeholder URLs and were unused by the detail pages, which own their content).
 
 ---
 
@@ -125,11 +113,11 @@ Every entry in `src/data/projects.json` is an object with these fields:
 
 ### Case 1 — Completed project with a cover image
 
-**Step 1:** Place the cover image in `public/PortadasProjects/`:
+**Step 1:** Place the cover image in `public/PortadasProjects/` as an optimized **WebP** (≤ ~1200px wide, quality ~80). You can use the repo script as reference: `scripts/optimize-images.mjs`.
 ```
 public/
 └── PortadasProjects/
-    └── Portada_MyNewProject.png    ← put it here
+    └── Portada_MyNewProject.webp    ← put it here
 ```
 
 **Step 2:** Add the entry to `src/data/projects.json`:
@@ -138,19 +126,14 @@ public/
     "id": 5,
     "title": "My New Project",
     "description": "Short description visible on the card.",
-    "image": "/Portafolio/PortadasProjects/Portada_MyNewProject.png",
+    "image": "/Portafolio/PortadasProjects/Portada_MyNewProject.webp",
     "tags": ["Python", "FastAPI", "Docker"],
     "links": {
         "github": "https://github.com/Krypton-N/my-new-project",
         "demo": null
     },
     "category": "dev",
-    "longDescription": "Full detailed description for the project detail page.",
-    "galleryImages": [
-        "/path/to/screenshot1.png",
-        "https://placehold.co/800x450/111/FFF?text=Architecture+Diagram"
-    ],
-    "developmentProcess": "Explain how it was built here."
+    "longDescription": "Full detailed description for the project detail page."
 }
 ```
 
@@ -187,9 +170,7 @@ No cover image needed, no detail page needed.
         "demo": null
     },
     "category": "ai",
-    "longDescription": "Placeholder for future detail page.",
-    "galleryImages": [],
-    "developmentProcess": "In progress."
+    "longDescription": "Placeholder for future detail page."
 }
 ```
 
@@ -204,7 +185,7 @@ Same as Case 2 but without `"wip": true`, and with a real `id` linked to a detai
 {
     "id": 7,
     "title": "My Icon Project",
-    "coverIcons": ["Workflow", "GitBranch", "Layers", "Zap"],
+    "coverIcons": ["Network", "Server", "Layers", "Cpu"],
     "category": "infra",
     "wip": false,
     ...
@@ -216,24 +197,20 @@ Then follow steps 3–4 from Case 1 to create and register the detail page.
 
 ## 5. Choosing `coverIcons`
 
-Icons must be valid **lucide-react** names in PascalCase.
+**Important:** icons are resolved against the curated `COVER_ICONS` map at the top of `ProjectCard.jsx` — **not** the full lucide-react library. This is deliberate: `import * as Icons from 'lucide-react'` bundled the entire icon set (~700 KB minified) and was removed for performance.
 
-**Recommended icons by domain:**
+Currently available names:
 
-| Domain | Icon suggestions |
-|---|---|
-| AI / ML | `BrainCircuit`, `Bot`, `Cpu`, `Sparkles`, `Network` |
-| Data / Analytics | `BarChart3`, `LineChart`, `Database`, `TableProperties`, `FlaskConical` |
-| RAG / Search | `Search`, `Layers`, `FileSearch`, `Library` |
-| Backend / Infra | `Server`, `Container`, `GitBranch`, `Workflow`, `Blocks` |
-| Frontend / Dev | `Code2`, `Paintbrush`, `Globe`, `Layout`, `Smartphone` |
-| Systems / Automation | `Cpu`, `Zap`, `Wrench`, `Settings2`, `Terminal` |
+```
+BrainCircuit, Layers, BarChart3, FlaskConical, Code2, Sparkles,
+Cpu, Database, Terminal, Globe, Bot, Network, LineChart, Server
+```
+
+**To use a new icon:** add it to both the lucide import and the `COVER_ICONS` object in `ProjectCard.jsx` (one line each), then reference it in `projects.json`. Unknown names fall back to `Code2` (primary) / `Sparkles` (secondary).
 
 Array order matters:
-- **Index 0** → Large primary icon (64×64), uses category primary color
-- **Index 1** → Small secondary icon, uses first secondary color
-- **Index 2** → Small secondary icon, uses second secondary color
-- **Index 3** → Small secondary icon, uses third secondary color
+- **Index 0** → Large primary icon (64×64), rose accent
+- **Index 1–3** → Small secondary icons (rose/zinc tints)
 
 Maximum 4 icons. Minimum 1 (only primary is rendered if the array has 1 element).
 
@@ -245,24 +222,24 @@ The filter tabs in `ProjectsGallery.jsx` filter by `category`. Current categorie
 
 | Tab label | Filters `category` value |
 |---|---|
-| Todos | Shows all projects |
-| Desarrollo | `"dev"` |
-| IA | `"ai"` |
-| Infraestructura | `"infra"` |
+| All | Shows all projects |
+| Development | `"dev"` |
+| AI | `"ai"` |
+| Infrastructure | `"infra"` |
 | Data Science | `"data"` |
 
 To add a new category tab, edit the `categories` array in `ProjectsGallery.jsx`:
 ```jsx
 const categories = [
-    { id: 'all',      label: 'Todos' },
-    { id: 'dev',      label: 'Desarrollo' },
-    { id: 'ai',       label: 'IA' },
-    { id: 'infra',    label: 'Infraestructura' },
+    { id: 'all',      label: 'All' },
+    { id: 'dev',      label: 'Development' },
+    { id: 'ai',       label: 'AI' },
+    { id: 'infra',    label: 'Infrastructure' },
     { id: 'data',     label: 'Data Science' },
-    { id: 'research', label: 'Investigación' },  // ← new tab
+    { id: 'research', label: 'Research' },  // ← new tab
 ];
 ```
-And add a theme entry in the `CATEGORY_THEME` object in `ProjectCard.jsx`.
+No theme changes are needed — all cards share the single rose theme.
 
 ---
 
@@ -277,9 +254,9 @@ The shimmer and pulse animations (`pc-shimmer`, `pc-pulse`) are defined **once**
 | File | Responsibility |
 |---|---|
 | `src/data/projects.json` | All project data — edit here to add/modify projects |
-| `src/components/ui/ProjectCard.jsx` | Adaptive card renderer (Image Mode + Visual Mode) |
+| `src/components/ui/ProjectCard.jsx` | Adaptive card renderer (Image Mode + Visual Mode) + `COVER_ICONS` map |
 | `src/components/ui/Badge.jsx` | Rose-accent badge for tags |
 | `src/components/sections/ProjectsGallery.jsx` | Grid layout, filter tabs, keyframe injection |
 | `src/pages/projects/Project{id}.jsx` | Individual detail pages |
 | `src/App.jsx` | Route registration — add new `/proyecto/:id` routes here |
-| `public/PortadasProjects/` | Cover images for Image Mode cards |
+| `public/PortadasProjects/` | Cover images (WebP) for Image Mode cards |
