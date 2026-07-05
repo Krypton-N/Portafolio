@@ -398,8 +398,8 @@ const Project4 = () => {
                     <Link to="/project/2" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group">
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> prev · restoration
                     </Link>
-                    <Link to="/project/1" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group text-right">
-                        next · ode solver <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    <Link to="/project/5" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group text-right">
+                        next · photolab pro <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </Link>
                 </div>
             </div>

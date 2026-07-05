@@ -7,14 +7,14 @@ import ProjectsGallery from './ProjectsGallery';
 import Reveal from '../motion/Reveal';
 
 const PHASES = [
-    { n: '01', name: 'Physical', desc: 'Mathematical upscaling — 4× canvas with a sharpness-preserving model.' },
-    { n: '02', name: 'Artistic', desc: 'A diffusion model repaints global texture and light, tethered by ControlNet.' },
-    { n: '03', name: 'Surgical', desc: 'YOLO + SAM detect faces and rebuild them in their own high-res pass.' },
+    { n: '01', name: 'Explore', desc: 'Otsu and black-hat both failed — global thresholds see brightness, not damage.' },
+    { n: '02', name: 'Adapt', desc: "The MCP catalog had no ROI mask or mask-fusion tool, so the session dropped to raw OpenCV mid-task — and said so." },
+    { n: '03', name: 'Measure', desc: 'A dual-channel threshold, boxed to the road and OR-combined, that connected components could count and size.' },
 ];
 
 /**
- * Act 2 — Proof. The featured AI-restoration project leads with a full-width
- * before/after slider; the rest of the gallery follows. (VisualSystem.md §4)
+ * Act 2 — Proof. The featured project leads with a full-width before/after
+ * slider; the rest of the gallery follows. (VisualSystem.md §4)
  */
 const FeaturedWork = ({ projects }) => {
     return (
@@ -26,14 +26,14 @@ const FeaturedWork = ({ projects }) => {
                 <Reveal>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-20">
                         <div className="order-2 lg:order-1">
-                            <span className="font-mono text-xs text-rose-400 uppercase tracking-wider">Featured · AI</span>
+                            <span className="font-mono text-xs text-rose-400 uppercase tracking-wider">Featured · MCP</span>
                             <h3 className="font-display text-3xl md:text-4xl font-bold text-white mt-3 mb-4 leading-tight">
-                                AI Image Restoration Workflow
+                                Finding Potholes with an MCP Server
                             </h3>
                             <p className="text-zinc-400 leading-relaxed mb-6">
-                                A three-stage ComfyUI pipeline that rebuilds blurry photographs into
-                                high-definition pieces — not by guessing, but by understanding the image
-                                and reconstructing it in passes.
+                                An unscripted Claude Desktop session drives PhotoLab Pro's MCP server against a real
+                                street photo — no demo script, just iterative computer vision until the potholes are
+                                correctly isolated from people, cars, and sidewalks.
                             </p>
 
                             <div className="space-y-3 mb-8">
@@ -49,7 +49,7 @@ const FeaturedWork = ({ projects }) => {
                             </div>
 
                             <Link
-                                to="/project/2"
+                                to="/project/5"
                                 className="inline-flex items-center gap-1.5 text-sm font-medium text-white border-b border-rose-500/40 pb-0.5 hover:border-rose-400 hover:text-rose-300 transition-colors group"
                             >
                                 Read the case study
@@ -59,11 +59,11 @@ const FeaturedWork = ({ projects }) => {
 
                         <div className="order-1 lg:order-2">
                             <BeforeAfterSlider
-                                beforeSrc="/Portafolio/Project_AI_WorkFlow/antes_72.webp"
-                                afterSrc="/Portafolio/Project_AI_WorkFlow/despues_72.webp"
+                                beforeSrc="/Portafolio/Project_PhotoLabPro/antes_baches3.webp"
+                                afterSrc="/Portafolio/Project_PhotoLabPro/despues_baches3.webp"
                             />
                             <p className="text-center text-xs text-zinc-600 font-mono mt-3">
-                                drag to compare · sample #3 of 9
+                                drag to compare · live MCP session, unscripted
                             </p>
                         </div>
                     </div>
