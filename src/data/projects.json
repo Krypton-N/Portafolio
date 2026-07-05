@@ -69,5 +69,18 @@
         },
         "category": "ai",
         "longDescription": "End-to-end development of a hybrid RAG pipeline combining dense (vector) and sparse (BM25/TF-IDF) retrieval. The system includes an automated evaluation module using the RAGAS framework to quantitatively measure faithfulness, answer relevancy, and context precision. The architecture covers FAISS indexing, prompt management with LangChain, and an automatic evaluator that produces per-query quality metrics stored in metrics.json for traceability."
+    },
+    {
+        "id": 5,
+        "title": "PhotoLab Pro",
+        "description": "Desktop Digital Image Processing app (PyQt6 + OpenCV) exposing 117 operations to an LLM through a custom MCP server — inspect, transform and filter images before they ever reach a training dataset.",
+        "image": "/Portafolio/PortadasProjects/Portada_PhotoLabPro.webp",
+        "tags": ["Computer Vision", "PyQt6", "MCP", "OpenCV", "Python"],
+        "links": {
+            "github": "https://github.com/Krypton-N/PhotoLab_Pro",
+            "demo": null
+        },
+        "category": "ai",
+        "longDescription": "PhotoLab Pro is a desktop Digital Image Processing application built with PyQt6 and OpenCV for the PDI course at ESCOM, in collaboration with the Centro de Investigación de Cómputo. It runs 117 operations across 13 academic modules — histograms, Fourier, morphology, segmentation, edge detection, connected components, image metrics — through a non-destructive pipeline with an O(1) incremental cache. Its standout piece is a 10-tool MCP server (FastMCP, Anthropic SDK) that exposes the same engine to an LLM: Claude can load, transform, analyze, and export real images headlessly, with an optional live GUI mirror over a local TCP bridge."
     }
 ]
