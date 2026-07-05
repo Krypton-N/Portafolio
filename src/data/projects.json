@@ -82,5 +82,18 @@
         },
         "category": "ai",
         "longDescription": "PhotoLab Pro is a desktop Digital Image Processing application built with PyQt6 and OpenCV for the PDI course at ESCOM, in collaboration with the Centro de Investigación de Cómputo. It runs 117 operations across 13 academic modules — histograms, Fourier, morphology, segmentation, edge detection, connected components, image metrics — through a non-destructive pipeline with an O(1) incremental cache. Its standout piece is a 10-tool MCP server (FastMCP, Anthropic SDK) that exposes the same engine to an LLM: Claude can load, transform, analyze, and export real images headlessly, with an optional live GUI mirror over a local TCP bridge."
+    },
+    {
+        "id": 6,
+        "title": "Zero-Hallucination Hybrid RAG Engine",
+        "description": "A local-first RAG engine that fuses dense and sparse retrieval, reranks with a cross-encoder, and refuses to answer once confidence drops below a calibrated threshold.",
+        "coverIcons": ["Database", "Network", "Terminal", "Server"],
+        "tags": ["Hybrid RAG", "Qdrant", "FastAPI", "React", "Python"],
+        "links": {
+            "github": "#",
+            "demo": null
+        },
+        "category": "ai",
+        "longDescription": "An end-to-end Retrieval-Augmented Generation engine built to answer questions over two structurally different corpora — source code and long-form regulatory text — without inventing facts. Dense (BGE-M3) and sparse (BM25) retrieval run in a single pass and get fused server-side in Qdrant via Reciprocal Rank Fusion; a cross-encoder reranker narrows ~100 candidates down to the 8 most relevant. A hard abstention gate means the LLM is never even called if the best retrieval score falls under a calibrated confidence threshold, and every generated claim must cite a real, validated source chunk. A semantic router filters small talk before it reaches the retrieval pipeline, and the generation layer sits behind a model-agnostic gateway, so swapping LLM providers is a one-line config change."
     }
 ]

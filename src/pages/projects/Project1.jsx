@@ -413,8 +413,8 @@ const Project1 = () => {
 
                 {/* next */}
                 <div className="pt-16 mt-10 border-t border-white/10 flex items-center justify-between">
-                    <Link to="/project/5" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group">
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> prev · photolab pro
+                    <Link to="/project/6" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group">
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> prev · rag engine
                     </Link>
                     <Link to="/project/3" className="font-mono text-sm text-zinc-400 hover:text-rose-400 transition-colors inline-flex items-center gap-2 group text-right">
                         next · hybrid rag <span className="group-hover:translate-x-1 transition-transform">→</span>

@@ -17,6 +17,7 @@ const Project2 = lazy(() => import('./pages/projects/Project2'));
 const Project3 = lazy(() => import('./pages/projects/Project3'));
 const Project4 = lazy(() => import('./pages/projects/Project4'));
 const Project5 = lazy(() => import('./pages/projects/Project5'));
+const Project6 = lazy(() => import('./pages/projects/Project6'));
 
 // Preserve the id when redirecting legacy Spanish project routes
 const LegacyProjectRedirect = () => {
@@ -44,6 +45,7 @@ function App() {
               <Route path="/project/3" element={<Project3 />} />
               <Route path="/project/4" element={<Project4 />} />
               <Route path="/project/5" element={<Project5 />} />
+              <Route path="/project/6" element={<Project6 />} />
 
               {/* Legacy Spanish routes → English (keeps old links alive) */}
               <Route path="/formacion" element={<Navigate to="/education" replace />} />
