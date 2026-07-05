@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowLeft, ArrowRight, ZoomIn, X, MousePointer2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ZoomIn, X, MousePointer2, ShieldCheck, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion as Motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 
@@ -8,16 +8,19 @@ import Img_CertAgile from '../resources/Page_CertificationsAssets/Kickoff-BadgeA
 import Img_CertPredictive from '../resources/Page_CertificationsAssets/Kickoff-Badge-predictive Methodology.png';
 import Img_CertPM_Agile from '../resources/Page_CertificationsAssets/Project Managment & Agile Fundamentals.webp';
 import Img_CertDeepLearning from '../resources/Page_CertificationsAssets/DLI_nvidia.webp';
+import Img_CertEthicalHacker from '../resources/Page_CertificationsAssets/Ethical-Hacker-Badge.png';
+import Pdf_CertEthicalHacker from '../resources/Page_CertificationsAssets/Ethical-Hacker-Certificate.pdf';
 import ImgESCOM from '../resources/Page_CertificationsAssets/logoESCOMBlanco.png';
 import ImgBatiz from '../resources/Page_CertificationsAssets/Batiz.webp';
 
 // ── Data ───────────────────────────────────────────────
 const certificates = [
+    { id: 6, file: Img_CertEthicalHacker, pdf: Pdf_CertEthicalHacker, title: 'Ethical Hacker', issuer: 'Cisco Networking Academy — Universidad Tecnológica de Pereira', date: 'Jun 2026', description: 'Verified badge for offensive security fundamentals — reconnaissance, vulnerability scanning, and exploitation techniques applied within an ethical, defensive framework.', keywords: ['Ethical Hacking', 'Penetration Testing', 'Network Security', 'Cybersecurity'], highlight: true },
     { id: 1, file: Img_CertDevIA, title: 'Introduction to AI-Powered Development', issuer: 'BIG School — Romuald Fons & Brais Moure', date: 'March 2026 · 6 h', description: 'AI Development from 0 to Production — the full lifecycle of building and deploying complex autonomous agents.', keywords: ['AI Agents', 'Production', 'Software Dev', 'Complex Systems'] },
+    { id: 5, file: Img_CertDeepLearning, title: 'Fundamentals of Deep Learning', issuer: 'NVIDIA Deep Learning Institute', date: 'Nov 2025 – Jan 2026', description: 'Neural network architecture for Computer Vision and NLP — optimization, Dropout, Data Augmentation.', keywords: ['Deep Learning', 'Computer Vision', 'NLP', 'NVIDIA DLI'] },
+    { id: 4, file: Img_CertPM_Agile, title: 'Project Management & Agile Fundamentals', issuer: 'Santander Open Academy', date: 'Aug 2025 · 8 h', description: 'Design Thinking to ideate, Lean Startup to validate via MVPs, and Scrum for iterative execution.', keywords: ['Design Thinking', 'Lean Startup', 'MVP', 'Scrum'] },
     { id: 2, file: Img_CertAgile, title: 'PMI KICKOFF — Agile', issuer: 'Project Management Institute', date: '2025', description: 'Official PMI badge certifying command of Scrum and Kanban, adaptability, and continuous value delivery.', keywords: ['Scrum', 'Kanban', 'Adaptability', 'Teamwork'] },
     { id: 3, file: Img_CertPredictive, title: 'PMI KICKOFF — Predictive', issuer: 'Project Management Institute', date: '2025', description: 'Traditional (waterfall) project management structured planning, scope definition, and risk control.', keywords: ['Waterfall', 'Planning', 'Risk', 'Scope'] },
-    { id: 4, file: Img_CertPM_Agile, title: 'Project Management & Agile Fundamentals', issuer: 'Santander Open Academy', date: 'Aug 2025 · 8 h', description: 'Design Thinking to ideate, Lean Startup to validate via MVPs, and Scrum for iterative execution.', keywords: ['Design Thinking', 'Lean Startup', 'MVP', 'Scrum'] },
-    { id: 5, file: Img_CertDeepLearning, title: 'Fundamentals of Deep Learning', issuer: 'NVIDIA Deep Learning Institute', date: 'Nov 2025 – Jan 2026', description: 'Neural network architecture for Computer Vision and NLP — optimization, Dropout, Data Augmentation.', keywords: ['Deep Learning', 'Computer Vision', 'NLP', 'NVIDIA DLI'] },
 ];
 
 const degrees = [
@@ -54,30 +57,58 @@ const TiltCard = ({ children, className = '' }) => {
 };
 
 /* ── Certificate card ── */
-const CertCard = ({ cert, onOpen }) => (
-    <TiltCard className="group relative w-[78vw] sm:w-[400px] flex-shrink-0 rounded-3xl border border-white/10 bg-zinc-900/50 backdrop-blur-md overflow-hidden shadow-2xl hover:border-rose-500/30 transition-colors">
-        <div className="absolute -inset-px rounded-3xl bg-gradient-to-b from-rose-500/0 via-rose-500/0 to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-        <button onClick={() => onOpen(cert.file, cert.title)} className="block w-full relative" style={{ transform: 'translateZ(40px)' }} aria-label={`Zoom ${cert.title}`}>
-            <div className="h-52 bg-zinc-950/60 flex items-center justify-center p-6 overflow-hidden">
-                <img src={cert.file} alt={cert.title} className="max-h-full max-w-full object-contain" loading="lazy" />
+const CertCard = ({ cert, onOpen }) => {
+    const hl = cert.highlight;
+
+    return (
+        <TiltCard
+            className={`group relative flex-shrink-0 rounded-3xl border backdrop-blur-md overflow-hidden shadow-2xl transition-colors ${
+                hl
+                    ? 'w-[82vw] sm:w-[420px] border-cyan-400/30 bg-gradient-to-b from-cyan-950/40 to-zinc-900/60 hover:border-cyan-400/60 shadow-cyan-500/10'
+                    : 'w-[78vw] sm:w-[400px] border-white/10 bg-zinc-900/50 hover:border-rose-500/30'
+            }`}
+        >
+            <div className={`absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none bg-gradient-to-b ${hl ? 'from-cyan-400/0 via-cyan-400/0 to-cyan-400/10' : 'from-rose-500/0 via-rose-500/0 to-rose-500/10'}`} />
+
+            {hl && (
+                <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-cyan-200 bg-cyan-500/10 border border-cyan-400/30 px-2.5 py-1 rounded-full backdrop-blur-sm">
+                    <ShieldCheck size={12} /> new · high impact
+                </span>
+            )}
+
+            <button onClick={() => onOpen(cert.file, cert.title)} className="block w-full relative" style={{ transform: 'translateZ(40px)' }} aria-label={`Zoom ${cert.title}`}>
+                <div className={`h-52 flex items-center justify-center p-6 overflow-hidden ${hl ? 'bg-zinc-950/40' : 'bg-zinc-950/60'}`}>
+                    <img src={cert.file} alt={cert.title} className="max-h-full max-w-full object-contain" loading="lazy" />
+                </div>
+                <span className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-mono text-zinc-300 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn size={11} /> zoom
+                </span>
+            </button>
+
+            <div className="p-5" style={{ transform: 'translateZ(25px)' }}>
+                <p className={`font-mono text-[11px] mb-1 ${hl ? 'text-cyan-400' : 'text-rose-400'}`}>{cert.date}</p>
+                <h3 className="font-display text-lg font-bold text-white leading-tight mb-1.5">{cert.title}</h3>
+                <p className={`text-xs font-mono mb-3 ${hl ? 'text-cyan-300/80' : 'text-rose-300/80'}`}>{cert.issuer}</p>
+                <p className="text-sm text-zinc-400 leading-relaxed mb-4">{cert.description}</p>
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                    {cert.keywords.map((k) => (
+                        <span key={k} className={`font-mono text-[10px] px-2 py-0.5 rounded-full border ${hl ? 'bg-cyan-500/5 border-cyan-400/10 text-cyan-300/70' : 'bg-white/5 border-white/5 text-zinc-500'}`}>{k}</span>
+                    ))}
+                </div>
+                {cert.pdf && (
+                    <a
+                        href={cert.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs text-cyan-300 hover:text-cyan-200 transition-colors border-b border-cyan-400/30 hover:border-cyan-200/60 pb-0.5"
+                    >
+                        <FileText size={13} /> view full certificate (PDF)
+                    </a>
+                )}
             </div>
-            <span className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-mono text-zinc-300 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <ZoomIn size={11} /> zoom
-            </span>
-        </button>
-        <div className="p-5" style={{ transform: 'translateZ(25px)' }}>
-            <p className="font-mono text-[11px] text-rose-400 mb-1">{cert.date}</p>
-            <h3 className="font-display text-lg font-bold text-white leading-tight mb-1.5">{cert.title}</h3>
-            <p className="text-rose-300/80 text-xs font-mono mb-3">{cert.issuer}</p>
-            <p className="text-sm text-zinc-400 leading-relaxed mb-4">{cert.description}</p>
-            <div className="flex flex-wrap gap-1.5">
-                {cert.keywords.map((k) => (
-                    <span key={k} className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-zinc-500">{k}</span>
-                ))}
-            </div>
-        </div>
-    </TiltCard>
-);
+        </TiltCard>
+    );
+};
 
 /* ── Pinned horizontal scroll gallery (desktop) / native snap (mobile · reduced) ── */
 const CertGallery = ({ onOpen }) => {
@@ -232,7 +263,7 @@ const FormationPage = () => {
                     <div className="flex flex-wrap gap-x-10 gap-y-4 mt-10 pt-8 border-t border-white/10 font-mono text-sm">
                         <div><span className="text-white text-xl font-display font-bold">2020 → now</span><span className="block text-zinc-500 text-xs mt-1">timespan</span></div>
                         <div><span className="text-white text-xl font-display font-bold">IPN</span><span className="block text-zinc-500 text-xs mt-1">2 institutions</span></div>
-                        <div><span className="text-white text-xl font-display font-bold">5</span><span className="block text-zinc-500 text-xs mt-1">certifications</span></div>
+                        <div><span className="text-white text-xl font-display font-bold">6</span><span className="block text-zinc-500 text-xs mt-1">certifications</span></div>
                     </div>
                 </div>
             </header>
@@ -259,7 +290,7 @@ const FormationPage = () => {
                         <div className="flex items-center gap-4 mb-3">
                             <span className="font-mono text-xs tracking-[0.25em] text-rose-400 uppercase whitespace-nowrap">Fine-tuning · certifications</span>
                         </div>
-                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white">Five passes, five gradients.</h2>
+                        <h2 className="font-display text-3xl md:text-4xl font-bold text-white">Six passes, six gradients.</h2>
                     </div>
                     <span className="hidden lg:inline-flex items-center gap-2 font-mono text-xs text-zinc-500">
                         <MousePointer2 size={13} className="text-rose-400" /> scroll to traverse · hover to tilt
